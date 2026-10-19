@@ -1,5 +1,4 @@
-// Incolla qui l'URL dell'app web di Apps Script (Distribuisci → Gestisci distribuzioni).
-const API_URL = "INCOLLA_QUI_L_URL_DELL_APP_WEB";
+const API_URL = "https://script.google.com/macros/s/AKfycbxXVHHGaC5iXk3ep0XHQHAp6E5sa7zuwuxfcccwC3svJVr5MDGQqFAtCrNhYqpGu0YKfA/exec";
 
 const form = document.getElementById("form");
 const giorniBox = document.getElementById("giorni");
