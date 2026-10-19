@@ -4,135 +4,162 @@ const form = document.getElementById("form");
 const giorniBox = document.getElementById("giorni");
 const giornoInput = document.getElementById("giorno");
 const messaggio = document.getElementById("messaggio");
-const bottoneAvanti = document.getElementById("avanti");
-const bottoneIndietro = document.getElementById("indietro");
-const bottoneInvia = document.getElementById("invia");
+const bottone = document.getElementById("invia");
 const dialogo = document.getElementById("dialogo");
-
-const fasi = [...document.querySelectorAll(".fase")];
-const totaleFasi = fasi.length;
-
-let faseCorrente = 0;
-let richiestaGiorni = 0;
 
 const tipo = () => form.elements.tipo.value;
 
-function mostraMessaggio(testo = "", errore = false) {
+let passaggioCorrente = 0;
+
+const titoliPassaggi = [
+  "Chi prenota?",
+  "I tuoi dati",
+  "Contatti e dettagli",
+  "Scegli il giorno",
+  "Riepilogo della prenotazione"
+];
+
+function mostraMessaggio(testo, errore) {
   messaggio.textContent = testo;
   messaggio.className = errore ? "errore" : "";
 }
 
-function nota(testo, classe = "nota") {
+function nota(testo, classe) {
   const p = document.createElement("p");
-  p.className = classe;
+  p.className = classe || "nota";
   p.textContent = testo;
   giorniBox.replaceChildren(p);
 }
 
-function campo(nome) {
-  return form.elements.namedItem(nome);
-}
-
-/* ATTIVA O DISATTIVA I CAMPI */
-
-function disattivaBlocco(blocco, disattiva) {
-  blocco.querySelectorAll("input, select, textarea").forEach((elemento) => {
-    elemento.disabled = disattiva;
-  });
-}
-
+// Mostra il blocco del genitore o dell'adulto; i campi nascosti vengono disattivati
+// così non vengono validati né inviati.
 function aggiornaBlocchi() {
-  const scelta = tipo();
+  document.getElementById("dopo").hidden = !tipo();
 
   document.querySelectorAll("[data-blocco]").forEach((blocco) => {
-    const attivo = blocco.dataset.blocco === scelta;
+    const attivo = blocco.dataset.blocco === tipo();
 
     blocco.hidden = !attivo;
-    disattivaBlocco(blocco, !attivo);
-  });
 
-  aggiornaCondizionali();
-}
-
-/* CAMPI CONDIZIONALI */
-
-function aggiornaCondizionali() {
-  document.querySelectorAll("[data-condizionale]").forEach((contenitore) => {
-    const nomeCampo = contenitore.dataset.condizionale;
-    const valoreRichiesto = contenitore.dataset.valore;
-    const controllo = campo(nomeCampo);
-
-    let visibile = Boolean(controllo && controllo.value === valoreRichiesto);
-
-    // Non mostrare campi condizionali appartenenti a un blocco inattivo.
-    const bloccoPadre = contenitore.closest("[data-blocco]");
-
-    if (bloccoPadre && bloccoPadre.hidden) {
-      visibile = false;
-    }
-
-    contenitore.hidden = !visibile;
-
-    contenitore.querySelectorAll("input, select, textarea").forEach((elemento) => {
-      elemento.disabled = !visibile;
-
-      if (!visibile) {
-        elemento.value = "";
-      }
+    blocco.querySelectorAll("input, select, textarea").forEach((c) => {
+      c.disabled = !attivo;
     });
   });
+
+  aggiornaGrado();
+  caricaGiorni();
 }
 
-/* NAVIGAZIONE */
+function aggiornaGrado() {
+  const campoGrado = document.getElementById("campoGrado");
+  const grado = form.elements.grado;
 
-function aggiornaInterfaccia() {
-  fasi.forEach((fase, indice) => {
-    fase.hidden = indice !== faseCorrente;
-    fase.classList.toggle("attiva", indice === faseCorrente);
+  let esperienza = "";
+
+  if (tipo() === "genitore") {
+    esperienza = form.elements.figlioEsperienza.value;
+  } else if (tipo() === "adulto") {
+    esperienza = form.elements.adultoEsperienza.value;
+  }
+
+  const visibile = esperienza === "Sì";
+
+  campoGrado.hidden = !visibile;
+
+  // Mantiene il campo originale "grado" anche quando non è visibile.
+  // Se la persona risponde "No", il valore viene lasciato vuoto.
+  if (!visibile) {
+    grado.value = "";
+  }
+}
+
+function aggiornaPassaggio() {
+  const selezioneTipo = document.getElementById("selezioneTipo");
+  const dopo = document.getElementById("dopo");
+
+  selezioneTipo.hidden = passaggioCorrente !== 0;
+  dopo.hidden = !tipo();
+
+  document.querySelectorAll("[data-passaggio]").forEach((elemento) => {
+    const numero = Number(elemento.dataset.passaggio);
+    elemento.hidden = numero !== passaggioCorrente;
   });
 
-  const nomiFasi = [
-    "Iniziamo",
-    "I tuoi dati",
-    "Contatti",
-    "Scegli il giorno",
-    "Riepilogo"
-  ];
+  document.getElementById("indietro").hidden = passaggioCorrente === 0;
 
-  document.getElementById("nomeFase").textContent = nomiFasi[faseCorrente];
-  document.getElementById("numeroFase").textContent =
-    `Passaggio ${faseCorrente + 1} di ${totaleFasi}`;
+  document.getElementById("avanti").hidden = passaggioCorrente === 4;
+  bottone.hidden = passaggioCorrente !== 4;
 
-  document.getElementById("barra").style.width =
-    `${((faseCorrente + 1) / totaleFasi) * 100}%`;
+  document.getElementById("titoloPassaggio").textContent =
+    titoliPassaggi[passaggioCorrente];
 
-  bottoneIndietro.hidden = faseCorrente === 0;
-  bottoneAvanti.hidden = faseCorrente === totaleFasi - 1;
-  bottoneInvia.hidden = faseCorrente !== totaleFasi - 1;
+  document.getElementById("numeroPassaggio").textContent =
+    `${passaggioCorrente + 1} / ${titoliPassaggi.length}`;
 
-  mostraMessaggio();
+  document.getElementById("progresso").style.width =
+    `${((passaggioCorrente + 1) / titoliPassaggi.length) * 100}%`;
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  document.querySelectorAll("[data-etichetta]").forEach((etichetta) => {
+    const numero = Number(etichetta.dataset.etichetta);
+
+    etichetta.classList.toggle("attivo", numero === passaggioCorrente);
+  });
+
+  mostraMessaggio("");
+
+  if (passaggioCorrente === 3) {
+    caricaGiorni();
+  }
+
+  if (passaggioCorrente === 4) {
+    aggiornaRiepilogo();
+  }
 }
 
-function controllaFase() {
-  const fase = fasi[faseCorrente];
+function controllaPassaggio() {
+  if (passaggioCorrente === 0) {
+    const selezionato = form.querySelector('input[name="tipo"]:checked');
 
-  const campi = [...fase.querySelectorAll("input, select, textarea")];
+    if (!selezionato) {
+      form.querySelector('input[name="tipo"]').reportValidity();
+      return false;
+    }
 
-  for (const elemento of campi) {
+    return true;
+  }
+
+  if (passaggioCorrente === 3) {
+    if (!giornoInput.value) {
+      mostraMessaggio("Scegli un giorno per la prova.", true);
+      return false;
+    }
+
+    return true;
+  }
+
+  const passaggio = document.querySelector(
+    `[data-passaggio="${passaggioCorrente}"]`
+  );
+
+  if (!passaggio) {
+    return true;
+  }
+
+  const campi = passaggio.querySelectorAll(
+    "input, select, textarea"
+  );
+
+  for (const campo of campi) {
     if (
-      elemento.disabled ||
-      elemento.type === "hidden" ||
-      elemento.name === "giorno" ||
-      elemento.name === "trappola"
+      campo.disabled ||
+      campo.closest("[hidden]") ||
+      campo.type === "hidden"
     ) {
       continue;
     }
 
-    if (!elemento.checkValidity()) {
-      elemento.reportValidity();
-      elemento.focus();
+    if (!campo.checkValidity()) {
+      campo.reportValidity();
       return false;
     }
   }
@@ -140,88 +167,61 @@ function controllaFase() {
   return true;
 }
 
-async function vaiAvanti() {
-  if (!controllaFase()) return;
-
-  if (faseCorrente === 0) {
-    aggiornaBlocchi();
-  }
-
-  if (faseCorrente === 3 && !giornoInput.value) {
-    mostraMessaggio("Seleziona un giorno per la tua prova.", true);
+function vaiAvanti() {
+  if (!controllaPassaggio()) {
     return;
   }
 
-  if (faseCorrente < totaleFasi - 1) {
-    faseCorrente++;
-
-    if (faseCorrente === 3) {
-      await caricaGiorni();
-    }
-
-    if (faseCorrente === 4) {
-      creaRiepilogo();
-    }
-
-    aggiornaInterfaccia();
+  if (passaggioCorrente < 4) {
+    passaggioCorrente++;
+    aggiornaPassaggio();
+    window.scrollTo(0, 0);
   }
 }
 
 function vaiIndietro() {
-  if (faseCorrente > 0) {
-    faseCorrente--;
-    aggiornaInterfaccia();
+  if (passaggioCorrente > 0) {
+    passaggioCorrente--;
+    aggiornaPassaggio();
+    window.scrollTo(0, 0);
   }
 }
 
-/* DISPONIBILITÀ DEI GIORNI */
-
 async function caricaGiorni() {
-  const idRichiesta = ++richiestaGiorni;
-
   giornoInput.value = "";
-  giorniBox.querySelectorAll(".giorno").forEach((b) => {
-    b.classList.remove("scelto");
-  });
 
-  const scelta = tipo();
-
-  if (!scelta) {
-    return nota("Prima seleziona chi parteciperà.");
+  if (!tipo()) {
+    return;
   }
 
   const nascita =
-    scelta === "genitore" ? campo("figlioNascita").value : "";
+    tipo() === "genitore"
+      ? form.elements.figlioNascita.value
+      : "";
 
-  if (scelta === "genitore" && !nascita) {
-    return nota("Inserisci la data di nascita del figlio/a per vedere i giorni disponibili.");
+  if (tipo() === "genitore" && !nascita) {
+    return nota(
+      "Inserisci la data di nascita del figlio/a per vedere i giorni disponibili."
+    );
   }
 
   nota("Caricamento dei giorni…");
 
   try {
     const url =
-      `${API_URL}?azione=disponibilita` +
-      `&tipo=${encodeURIComponent(scelta)}` +
+      `${API_URL}?azione=disponibilita&tipo=${tipo()}` +
       `&nascita=${encodeURIComponent(nascita)}`;
 
-    const response = await fetch(url);
-    const risposta = await response.json();
-
-    // Ignora le risposte superate da richieste più recenti.
-    if (idRichiesta !== richiestaGiorni) return;
+    const risposta = await (await fetch(url)).json();
 
     if (!risposta.ok) {
-      throw new Error(risposta.errore || "Impossibile caricare i giorni.");
+      throw new Error(risposta.errore);
     }
 
-    disegnaGiorni(risposta.giorni || []);
-
-  } catch (errore) {
-    if (idRichiesta !== richiestaGiorni) return;
-
+    disegnaGiorni(risposta.giorni);
+  } catch (err) {
     nota(
-      errore.message || "Impossibile caricare i giorni. Riprova.",
+      err.message || "Impossibile caricare i giorni. Riprova.",
       "errore"
     );
   }
@@ -232,304 +232,265 @@ function disegnaGiorni(giorni) {
     return nota("Al momento non ci sono giorni disponibili.");
   }
 
-  const frammento = document.createDocumentFragment();
+  const bottoni = giorni.map((g) => {
+    const livello =
+      g.postiRimasti >= 3
+        ? "verde"
+        : g.postiRimasti === 2
+          ? "giallo"
+          : g.postiRimasti === 1
+            ? "rosso"
+            : "pieno";
 
-  giorni.forEach((g) => {
-    const rimasti = Number(g.postiRimasti);
+    const testoPosti = {
+      verde: `${g.postiRimasti} posti`,
+      giallo: "2 posti",
+      rosso: "Ultimo posto",
+      pieno: "Pieno"
+    }[livello];
 
-    let livello;
-    let testoPosti;
+    const b = document.createElement("button");
 
-    if (rimasti <= 0) {
-      livello = "pieno";
-      testoPosti = "Completo";
-    } else if (rimasti === 1) {
-      livello = "rosso";
-      testoPosti = "Ultimo posto";
-    } else if (rimasti === 2) {
-      livello = "giallo";
-      testoPosti = "2 posti";
-    } else {
-      livello = "verde";
-      testoPosti = `${rimasti} posti`;
-    }
-
-    const bottone = document.createElement("button");
-    bottone.type = "button";
-    bottone.className = `giorno ${livello}`;
-    bottone.dataset.data = g.data;
+    b.type = "button";
+    b.className = `giorno ${livello}`;
+    b.dataset.data = g.data;
 
     if (livello === "pieno") {
-      bottone.setAttribute("aria-disabled", "true");
-      bottone.setAttribute("aria-label", `${g.etichetta}, turno completo`);
-    } else {
-      bottone.setAttribute(
-        "aria-label",
-        `${g.etichetta}, ${testoPosti} disponibili`
-      );
+      b.setAttribute("aria-disabled", "true");
     }
 
     const titolo = document.createElement("strong");
     titolo.textContent = g.etichetta;
 
+    const dettaglio = document.createElement("span");
+    dettaglio.textContent = `${g.corso} · ${g.orario}`;
+
     const posti = document.createElement("small");
     posti.textContent = testoPosti;
 
-    bottone.append(titolo, posti);
+    b.append(titolo, dettaglio, posti);
 
-    bottone.addEventListener("click", () => {
+    b.addEventListener("click", () => {
       if (livello === "pieno") {
-        dialogo.showModal();
-        return;
+        return dialogo.showModal();
       }
 
-      giorniBox.querySelectorAll(".giorno").forEach((elemento) => {
-        elemento.classList.remove("scelto");
-        elemento.setAttribute("aria-pressed", "false");
+      giorniBox.querySelectorAll(".giorno").forEach((x) => {
+        x.classList.remove("scelto");
       });
 
-      bottone.classList.add("scelto");
-      bottone.setAttribute("aria-pressed", "true");
-
+      b.classList.add("scelto");
       giornoInput.value = g.data;
 
-      mostraMessaggio();
+      mostraMessaggio("");
     });
 
-    frammento.appendChild(bottone);
+    return b;
   });
 
-  giorniBox.replaceChildren(frammento);
+  giorniBox.replaceChildren(...bottoni);
 }
 
-/* RIEPILOGO */
-
 function valore(nome) {
-  const elemento = campo(nome);
+  const elemento = form.elements[nome];
 
-  if (!elemento || elemento.disabled) return "";
+  if (!elemento) {
+    return "";
+  }
 
   return String(elemento.value || "").trim();
 }
 
-function aggiungiGruppo(contenitore, titolo, righe) {
+function aggiungiGruppoRiepilogo(titolo, righe, contenitore) {
   const gruppo = document.createElement("section");
   gruppo.className = "riepilogo-gruppo";
 
   const intestazione = document.createElement("h3");
   intestazione.textContent = titolo;
+
   gruppo.appendChild(intestazione);
 
   righe.forEach(([etichetta, testo]) => {
-    if (!testo) return;
-
-    const riga = document.createElement("div");
+    const riga = document.createElement("dl");
     riga.className = "riepilogo-riga";
 
-    const nome = document.createElement("span");
+    const nome = document.createElement("dt");
     nome.textContent = etichetta;
 
-    const valoreCampo = document.createElement("span");
-    valoreCampo.textContent = testo;
+    const valoreRiga = document.createElement("dd");
+    valoreRiga.textContent = testo || "—";
 
-    riga.append(nome, valoreCampo);
+    riga.append(nome, valoreRiga);
     gruppo.appendChild(riga);
   });
 
   contenitore.appendChild(gruppo);
 }
 
-function creaRiepilogo() {
-  const contenitore = document.getElementById("riepilogo");
-  contenitore.replaceChildren();
+function aggiornaRiepilogo() {
+  const riepilogo = document.getElementById("riepilogo");
 
-  const scelta = tipo();
+  riepilogo.replaceChildren();
 
-  if (scelta === "genitore") {
-    aggiungiGruppo(contenitore, "Genitore", [
-      ["Nome", valore("genitoreNome")],
-      ["Cognome", valore("genitoreCognome")],
-      ["Telefono", valore("genitoreTelefono")]
-    ]);
+  if (tipo() === "genitore") {
+    aggiungiGruppoRiepilogo(
+      "Genitore",
+      [
+        ["Nome", valore("genitoreNome")],
+        ["Cognome", valore("genitoreCognome")],
+        ["Telefono", valore("genitoreTelefono")]
+      ],
+      riepilogo
+    );
 
-    aggiungiGruppo(contenitore, "Figlio/a", [
-      ["Nome", valore("figlioNome")],
-      ["Data di nascita", valore("figlioNascita")],
-      ["Esperienza nel karate", valore("figlioEsperienza")],
-      ["Grado", valore("gradoFiglio")],
-      ["Accompagnatore", valore("accompagnatore")],
-      ["Note", valore("figlioNote")]
-    ]);
-
+    aggiungiGruppoRiepilogo(
+      "Figlio/a",
+      [
+        ["Nome", valore("figlioNome")],
+        ["Data di nascita", valore("figlioNascita")],
+        ["Esperienza nel karate", valore("figlioEsperienza")],
+        ["Accompagnatore", valore("accompagnatore")],
+        ["Note", valore("figlioNote")]
+      ],
+      riepilogo
+    );
   } else {
-    aggiungiGruppo(contenitore, "Dati personali", [
-      ["Nome", valore("adultoNome")],
-      ["Cognome", valore("adultoCognome")],
-      ["Telefono", valore("adultoTelefono")],
-      ["Data di nascita", valore("adultoNascita")],
-      ["Esperienza nel karate", valore("adultoEsperienza")],
-      ["Grado", valore("grado")]
-    ]);
+    aggiungiGruppoRiepilogo(
+      "Dati personali",
+      [
+        ["Nome", valore("adultoNome")],
+        ["Cognome", valore("adultoCognome")],
+        ["Telefono", valore("adultoTelefono")],
+        ["Data di nascita", valore("adultoNascita")],
+        ["Esperienza nel karate", valore("adultoEsperienza")]
+      ],
+      riepilogo
+    );
   }
 
-  aggiungiGruppo(contenitore, "Contatti", [
-    ["Email", valore("email")],
-    ["Comune", valore("comune")]
-  ]);
+  aggiungiGruppoRiepilogo(
+    "Contatti",
+    [
+      ["Email", valore("email")],
+      ["Comune", valore("comune")],
+      ["Grado", valore("grado")]
+    ],
+    riepilogo
+  );
 
-  const giornoSelezionato = giornoInput.value;
+  const giornoScelto = giorniBox.querySelector(".giorno.scelto");
 
-  const schedaGiorno = document.createElement("div");
-  schedaGiorno.className = "riepilogo-data";
-
-  const etichetta = document.createElement("strong");
-  etichetta.textContent = "Giorno scelto";
-
-  const data = document.createElement("div");
-
-  const bottoneSelezionato = giorniBox.querySelector(".giorno.scelto");
-  data.textContent = bottoneSelezionato
-    ? bottoneSelezionato.querySelector("strong").textContent
-    : giornoSelezionato;
-
-  schedaGiorno.append(etichetta, data);
-  contenitore.appendChild(schedaGiorno);
+  aggiungiGruppoRiepilogo(
+    "Prova",
+    [
+      [
+        "Giorno e turno",
+        giornoScelto
+          ? giornoScelto.textContent.replace(/\s+/g, " ").trim()
+          : giornoInput.value
+      ]
+    ],
+    riepilogo
+  );
 }
-
-/* INVIO PRENOTAZIONE */
 
 async function invia(evento) {
   evento.preventDefault();
 
-  if (!controllaFase()) return;
+  if (passaggioCorrente !== 4) {
+    return;
+  }
 
   if (!giornoInput.value) {
-    mostraMessaggio("Seleziona un giorno per la tua prova.", true);
-    faseCorrente = 3;
-    aggiornaInterfaccia();
+    mostraMessaggio(
+      "Torna alla scelta del giorno e seleziona una disponibilità.",
+      true
+    );
     return;
   }
 
-  if (campo("trappola").value) {
-    mostraMessaggio("Impossibile elaborare la richiesta.", true);
-    return;
-  }
-
-  bottoneInvia.disabled = true;
-  bottoneAvanti.disabled = true;
-  bottoneIndietro.disabled = true;
-
-  mostraMessaggio("Invio della prenotazione in corso…");
+  bottone.disabled = true;
+  mostraMessaggio("Invio in corso…");
 
   try {
     const dati = Object.fromEntries(new FormData(form));
 
-    // Mantiene il formato della richiesta utilizzato dal modulo originale.
-    const response = await fetch(API_URL, {
+    // text/plain evita la richiesta "preflight" CORS, che Apps Script non gestisce.
+    const risposta = await (await fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "text/plain;charset=utf-8"
       },
       body: JSON.stringify(dati)
-    });
-
-    const risposta = await response.json();
+    })).json();
 
     if (risposta.ok) {
-      const dettagli = document.getElementById("dettagli");
-
-      dettagli.textContent =
+      document.getElementById("dettagli").textContent =
         `${risposta.data} · ${risposta.corso} (${risposta.orario})`;
 
-      document.getElementById("modulo").hidden = true;
+      form.hidden = true;
       document.getElementById("successo").hidden = false;
 
-      window.scrollTo({ top: 0, behavior: "smooth" });
-
+      window.scrollTo(0, 0);
     } else {
       mostraMessaggio(
-        risposta.errore || "Prenotazione non riuscita. Riprova.",
+        risposta.errore || "Prenotazione non riuscita.",
         true
       );
 
-      // Ritorna alla scelta del giorno per aggiornare la disponibilità.
-      faseCorrente = 3;
-      aggiornaInterfaccia();
-      await caricaGiorni();
+      caricaGiorni();
     }
-
-  } catch (errore) {
+  } catch (err) {
     mostraMessaggio(
-      "Connessione non riuscita. Controlla la connessione e riprova.",
+      "Connessione non riuscita. Riprova tra poco.",
       true
     );
-
   } finally {
-    bottoneInvia.disabled = false;
-    bottoneAvanti.disabled = false;
-    bottoneIndietro.disabled = false;
+    bottone.disabled = false;
   }
 }
-
-/* NUOVA PRENOTAZIONE */
 
 function nuovaPrenotazione() {
   form.reset();
 
+  form.hidden = false;
   document.getElementById("successo").hidden = true;
-  document.getElementById("modulo").hidden = false;
 
-  faseCorrente = 0;
+  passaggioCorrente = 0;
+
   giornoInput.value = "";
-
   giorniBox.replaceChildren();
 
-  document.querySelectorAll("[data-blocco]").forEach((blocco) => {
-    blocco.hidden = true;
-    disattivaBlocco(blocco, true);
-  });
+  aggiornaBlocchi();
+  aggiornaPassaggio();
 
-  document.querySelectorAll("[data-condizionale]").forEach((blocco) => {
-    blocco.hidden = true;
+  mostraMessaggio("");
 
-    blocco.querySelectorAll("input, select, textarea").forEach((elemento) => {
-      elemento.disabled = true;
-      elemento.value = "";
-    });
-  });
-
-  aggiornaInterfaccia();
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo(0, 0);
 }
 
-/* EVENTI */
-
-form.elements.tipo.forEach((radio) => {
-  radio.addEventListener("change", () => {
-    aggiornaBlocchi();
-    mostraMessaggio();
-  });
+form.elements.tipo.forEach((r) => {
+  r.addEventListener("change", aggiornaBlocchi);
 });
 
-campo("figlioNascita").addEventListener("change", () => {
-  if (faseCorrente === 3) caricaGiorni();
-});
+form.elements.figlioNascita.addEventListener("change", caricaGiorni);
 
-campo("figlioEsperienza").addEventListener("change", aggiornaCondizionali);
-campo("adultoEsperienza").addEventListener("change", aggiornaCondizionali);
+form.elements.figlioEsperienza.addEventListener("change", aggiornaGrado);
+form.elements.adultoEsperienza.addEventListener("change", aggiornaGrado);
 
-bottoneAvanti.addEventListener("click", vaiAvanti);
-bottoneIndietro.addEventListener("click", vaiIndietro);
+document.getElementById("avanti").addEventListener("click", vaiAvanti);
+document.getElementById("indietro").addEventListener("click", vaiIndietro);
+
 form.addEventListener("submit", invia);
 
 document.getElementById("chiudi").addEventListener("click", () => {
   dialogo.close();
 });
 
-document.getElementById("nuova").addEventListener("click", nuovaPrenotazione);
-
-/* AVVIO */
+document.getElementById("nuovaPrenotazione").addEventListener(
+  "click",
+  nuovaPrenotazione
+);
 
 aggiornaBlocchi();
-aggiornaInterfaccia();
+aggiornaPassaggio();
