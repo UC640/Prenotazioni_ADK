@@ -3,85 +3,315 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#c8102e">
+  <meta name="description" content="Prenota una prova gratuita di karate con ADKarate.">
   <title>Prenota una prova · ADKarate</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
+
 <body>
-<main>
-  <h1>Prenota una prova gratuita</h1>
-  <p class="intro">Compila il modulo e scegli il giorno: riceverai la conferma via email.</p>
+  <header class="testata">
+    <div class="testata-interna">
+      <!-- Sostituisci logo.png con il nome del logo caricato su GitHub -->
+      <div class="logo">
+        <img src="logo.png" alt="Logo ADKarate"
+             onerror="this.style.display='none'">
+        <span class="logo-segnaposto" aria-hidden="true">AD</span>
+      </div>
 
-  <form id="form" novalidate>
-    <fieldset>
-      <legend>Chi sta compilando il modulo?</legend>
-      <label class="scelta"><input type="radio" name="tipo" value="genitore" required> Sono un genitore e prenoto per mio figlio/a</label>
-      <label class="scelta"><input type="radio" name="tipo" value="adulto"> Sono maggiorenne e prenoto per me</label>
-    </fieldset>
-
-    <div id="dopo" hidden>
-      <section data-blocco="genitore" hidden>
-        <h2>Dati del genitore</h2>
-        <label>Nome <input name="genitoreNome" required maxlength="100" autocomplete="given-name"></label>
-        <label>Cognome <input name="genitoreCognome" required maxlength="100" autocomplete="family-name"></label>
-        <label>Telefono <input name="genitoreTelefono" type="tel" required autocomplete="tel"></label>
-        <h2>Dati del figlio/a</h2>
-        <label>Nome <input name="figlioNome" required maxlength="100"></label>
-        <label>Data di nascita <input name="figlioNascita" type="date" required></label>
-        <label>Ha già esperienza nel karate?
-          <select name="figlioEsperienza" required><option value="">Scegli…</option><option>Sì</option><option>No</option></select>
-        </label>
-        <label>Da chi verrà accompagnato? <input name="accompagnatore" maxlength="100"></label>
-        <label>Parlaci brevemente di tuo figlio/a <textarea name="figlioNote" rows="3" maxlength="1000"></textarea></label>
-      </section>
-
-      <section data-blocco="adulto" hidden>
-        <h2>I tuoi dati</h2>
-        <label>Nome <input name="adultoNome" required maxlength="100" autocomplete="given-name"></label>
-        <label>Cognome <input name="adultoCognome" required maxlength="100" autocomplete="family-name"></label>
-        <label>Numero di cellulare <input name="adultoTelefono" type="tel" required autocomplete="tel"></label>
-        <label>Data di nascita <input name="adultoNascita" type="date" required></label>
-        <label>Hai già fatto karate in precedenza?
-          <select name="adultoEsperienza" required><option value="">Scegli…</option><option>Sì</option><option>No</option></select>
-        </label>
-      </section>
-
-      <section>
-        <h2>Contatti e dettagli</h2>
-        <label>Email <input name="email" type="email" required maxlength="150" autocomplete="email"></label>
-        <label>Comune di residenza <input name="comune" required maxlength="100" autocomplete="address-level2"></label>
-        <label>Ricordi il grado? (se hai già praticato) <input name="grado" maxlength="100"></label>
-      </section>
-
-      <section>
-        <h2>Scegli il giorno</h2>
-        <ul class="legenda" aria-label="Legenda">
-          <li><span class="pallino verde"></span> 3 posti liberi</li>
-          <li><span class="pallino giallo"></span> 2 posti liberi</li>
-          <li><span class="pallino rosso"></span> ultimo posto</li>
-          <li><span class="pallino pieno"></span> pieno</li>
-        </ul>
-        <div id="giorni"></div>
-        <input type="hidden" name="giorno" id="giorno">
-      </section>
-
-      <input class="trappola" name="trappola" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <p id="messaggio" role="status"></p>
-      <button type="submit" id="invia">Prenota la prova</button>
+      <div class="testata-testo">
+        <div class="testata-titolo">AD<span>Karate</span></div>
+        <p>Prenota con noi la tua prima esperienza!</p>
+      </div>
     </div>
-  </form>
+  </header>
 
-  <section id="successo" hidden>
-    <h2>Prenotazione confermata! 🥋</h2>
-    <p id="dettagli"></p>
-    <p>Ti abbiamo inviato una email di conferma. A presto!</p>
-  </section>
-</main>
+  <main class="contenitore">
+    <section id="modulo">
 
-<dialog id="dialogo">
-  <p><strong>Turno pieno</strong></p>
-  <p>Tutti i posti di questo giorno sono già stati prenotati. Scegli un altro giorno.</p>
-  <button type="button" id="chiudi">Ho capito</button>
-</dialog>
+      <div class="introduzione">
+        <span class="etichetta">PRIMA LEZIONE GRATUITA</span>
+        <h1>Entra nel mondo del karate.</h1>
+        <p>Compila il modulo e scegli il giorno della tua prova.</p>
+      </div>
+
+      <div class="progresso" aria-label="Avanzamento della compilazione">
+        <div class="progresso-testo">
+          <span id="nomeFase">Iniziamo</span>
+          <span id="numeroFase">Passaggio 1 di 5</span>
+        </div>
+        <div class="barra-progresso">
+          <div id="barra" class="barra-progresso-riempimento"></div>
+        </div>
+      </div>
+
+      <form id="form" novalidate>
+
+        <!-- FASE 1 -->
+        <section class="fase attiva" data-fase="0">
+          <div class="fase-intestazione">
+            <span class="numero-sezione">01</span>
+            <div>
+              <h2>Chi parteciperà?</h2>
+              <p>Cominciamo da qui.</p>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend>Chi sta compilando il modulo?</legend>
+
+            <label class="opzione">
+              <input type="radio" name="tipo" value="genitore" required>
+              <span class="opzione-contenuto">
+                <strong>Genitore</strong>
+                <small>Prenoto una prova per mio figlio o mia figlia.</small>
+              </span>
+              <span class="opzione-check" aria-hidden="true">✓</span>
+            </label>
+
+            <label class="opzione">
+              <input type="radio" name="tipo" value="adulto">
+              <span class="opzione-contenuto">
+                <strong>Adulto</strong>
+                <small>Prenoto una prova per me.</small>
+              </span>
+              <span class="opzione-check" aria-hidden="true">✓</span>
+            </label>
+          </fieldset>
+        </section>
+
+        <!-- FASE 2 -->
+        <section class="fase" data-fase="1" hidden>
+          <div class="fase-intestazione">
+            <span class="numero-sezione">02</span>
+            <div>
+              <h2>I tuoi dati</h2>
+              <p>Ci servono alcune informazioni per conoscerti.</p>
+            </div>
+          </div>
+
+          <section data-blocco="genitore" hidden>
+            <h3>Dati del genitore</h3>
+
+            <div class="griglia-campi">
+              <label>Nome
+                <input name="genitoreNome" required maxlength="100"
+                       autocomplete="given-name">
+              </label>
+
+              <label>Cognome
+                <input name="genitoreCognome" required maxlength="100"
+                       autocomplete="family-name">
+              </label>
+            </div>
+
+            <label>Numero di telefono
+              <input name="genitoreTelefono" type="tel" required
+                     autocomplete="tel" maxlength="30">
+            </label>
+
+            <h3>Dati di tuo figlio o tua figlia</h3>
+
+            <label>Nome
+              <input name="figlioNome" required maxlength="100">
+            </label>
+
+            <label>Data di nascita
+              <input name="figlioNascita" type="date" required>
+            </label>
+
+            <label>Ha già esperienza nel karate?
+              <select name="figlioEsperienza" required>
+                <option value="">Seleziona una risposta</option>
+                <option value="Sì">Sì</option>
+                <option value="No">No</option>
+              </select>
+            </label>
+
+            <div data-condizionale="figlioEsperienza" data-valore="Sì" hidden>
+              <label>Ricordi il grado?
+                <input name="gradoFiglio" maxlength="100"
+                       placeholder="Es. cintura bianca, gialla...">
+              </label>
+            </div>
+
+            <label>Da chi verrà accompagnato?
+              <input name="accompagnatore" maxlength="100">
+            </label>
+
+            <label>Parlaci brevemente di tuo figlio o tua figlia
+              <textarea name="figlioNote" rows="3" maxlength="1000"
+                        placeholder="Interessi, esigenze o informazioni utili..."></textarea>
+            </label>
+          </section>
+
+          <section data-blocco="adulto" hidden>
+            <h3>I tuoi dati</h3>
+
+            <div class="griglia-campi">
+              <label>Nome
+                <input name="adultoNome" required maxlength="100"
+                       autocomplete="given-name">
+              </label>
+
+              <label>Cognome
+                <input name="adultoCognome" required maxlength="100"
+                       autocomplete="family-name">
+              </label>
+            </div>
+
+            <label>Numero di cellulare
+              <input name="adultoTelefono" type="tel" required
+                     autocomplete="tel" maxlength="30">
+            </label>
+
+            <label>Data di nascita
+              <input name="adultoNascita" type="date" required>
+            </label>
+
+            <label>Hai già fatto karate in precedenza?
+              <select name="adultoEsperienza" required>
+                <option value="">Seleziona una risposta</option>
+                <option value="Sì">Sì</option>
+                <option value="No">No</option>
+              </select>
+            </label>
+
+            <div data-condizionale="adultoEsperienza" data-valore="Sì" hidden>
+              <label>Ricordi il grado?
+                <input name="grado" maxlength="100"
+                       placeholder="Es. cintura bianca, gialla...">
+              </label>
+            </div>
+          </section>
+        </section>
+
+        <!-- FASE 3 -->
+        <section class="fase" data-fase="2" hidden>
+          <div class="fase-intestazione">
+            <span class="numero-sezione">03</span>
+            <div>
+              <h2>Come possiamo contattarti?</h2>
+              <p>Utilizzeremo questi dati per la conferma della prova.</p>
+            </div>
+          </div>
+
+          <section>
+            <label>Email
+              <input name="email" type="email" required maxlength="150"
+                     autocomplete="email" placeholder="nome@esempio.it">
+            </label>
+
+            <label>Comune di residenza
+              <input name="comune" required maxlength="100"
+                     autocomplete="address-level2">
+            </label>
+          </section>
+
+          <div class="informativa">
+            <strong>Quasi pronti!</strong>
+            <p>Nel prossimo passaggio potrai scegliere il giorno della tua prova gratuita.</p>
+          </div>
+        </section>
+
+        <!-- FASE 4 -->
+        <section class="fase" data-fase="3" hidden>
+          <div class="fase-intestazione">
+            <span class="numero-sezione">04</span>
+            <div>
+              <h2>Scegli il tuo giorno.</h2>
+              <p>Seleziona una data tra quelle disponibili.</p>
+            </div>
+          </div>
+
+          <ul class="legenda" aria-label="Disponibilità dei posti">
+            <li><span class="pallino verde"></span> Almeno 3 posti</li>
+            <li><span class="pallino giallo"></span> 2 posti</li>
+            <li><span class="pallino rosso"></span> Ultimo posto</li>
+            <li><span class="pallino pieno"></span> Completo</li>
+          </ul>
+
+          <div id="giorni" aria-label="Date disponibili" aria-live="polite"></div>
+          <input type="hidden" name="giorno" id="giorno">
+
+          <p class="nota-calendario">
+            I posti disponibili vengono aggiornati in base ai dati ricevuti dal sistema di prenotazione.
+          </p>
+        </section>
+
+        <!-- FASE 5: RIEPILOGO -->
+        <section class="fase" data-fase="4" hidden>
+          <div class="fase-intestazione">
+            <span class="numero-sezione">05</span>
+            <div>
+              <h2>Controlla i tuoi dati.</h2>
+              <p>Verifica le informazioni prima di confermare.</p>
+            </div>
+          </div>
+
+          <div id="riepilogo" class="riepilogo"></div>
+
+          <div class="informativa">
+            <strong>Un ultimo passo!</strong>
+            <p>Premi «Conferma prenotazione» per inviare la richiesta.</p>
+          </div>
+        </section>
+
+        <input class="trappola" name="trappola" tabindex="-1"
+               autocomplete="off" aria-hidden="true">
+
+        <p id="messaggio" role="status" aria-live="polite"></p>
+
+        <div class="navigazione">
+          <button type="button" id="indietro" class="pulsante secondario" hidden>
+            ← Indietro
+          </button>
+
+          <button type="button" id="avanti" class="pulsante principale">
+            Avanti →
+          </button>
+
+          <button type="submit" id="invia" class="pulsante principale" hidden>
+            Conferma prenotazione →
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- CONFERMA -->
+    <section id="successo" hidden>
+      <div class="successo-icona" aria-hidden="true">✓</div>
+      <span class="etichetta">PRENOTAZIONE COMPLETATA</span>
+      <h1>Prenotazione confermata!</h1>
+      <p class="successo-intro">
+        Grazie per aver scelto ADKarate. Ti aspettiamo sul tatami!
+      </p>
+
+      <div id="dettagli" class="dettagli-successo"></div>
+
+      <p class="nota-email">
+        La prenotazione è stata registrata correttamente.
+        Se il sistema ha inviato la conferma via email, la riceverai all'indirizzo indicato.
+      </p>
+
+      <button type="button" id="nuova" class="pulsante principale">
+        Prenota un'altra prova ↻
+      </button>
+    </section>
+  </main>
+
+  <footer>
+    <p>ADKarate · La tua prima esperienza comincia qui.</p>
+  </footer>
+
+  <dialog id="dialogo">
+    <div class="dialogo-icona">!</div>
+    <h2>Turno completo</h2>
+    <p>Tutti i posti di questo giorno sono già stati prenotati. Scegli un'altra data.</p>
+    <button type="button" id="chiudi" class="pulsante principale">
+      Ho capito
+    </button>
+  </dialog>
 </body>
 </html>
