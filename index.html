@@ -3,10 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Prenota una prova</title>
+  <title>Prenota una prova · ADKarate</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <h1>Prenota una prova</h1>
-  <p>Se vedi questa pagina, GitHub Pages funziona.</p>
+<main>
+  <h1>Prenota una prova gratuita</h1>
+  <p class="intro">Compila il modulo e scegli il giorno: riceverai la conferma via email.</p>
+
+  <form id="form" novalidate>
+    <fieldset>
+      <legend>Chi sta compilando il modulo?</legend>
+      <label class="scelta"><input type="radio" name="tipo" value="genitore" required> Sono un genitore e prenoto per mio figlio/a</label>
+      <label class="scelta"><input type="radio" name="tipo" value="adulto"> Sono maggiorenne e prenoto per me</label>
+    </fieldset>
+
+    <div id="dopo" hidden>
+      <section data-blocco="genitore" hidden>
+        <h2>Dati del genitore</h2>
+        <label>Nome <input name="genitoreNome" required maxlength="100" autocomplete="given-name"></label>
+        <label>Cognome <input name="genitoreCognome" required maxlength="100" autocomplete="family-name"></label>
+        <label>Telefono <input name="genitoreTelefono" type="tel" required autocomplete="tel"></label>
+        <h2>Dati del figlio/a</h2>
+        <label>Nome <input name="figlioNome" required maxlength="100"></label>
+        <label>Data di nascita <input name="figlioNascita" type="date" required></label>
+        <label>Ha già esperienza nel karate?
+          <select name="figlioEsperienza" required><option value="">Scegli…</option><option>Sì</option><option>No</option></select>
+        </label>
+        <label>Da chi verrà accompagnato? <input name="accompagnatore" maxlength="100"></label>
+        <label>Parlaci brevemente di tuo figlio/a <textarea name="figlioNote" rows="3" maxlength="1000"></textarea></label>
+      </section>
+
+      <section data-blocco="adulto" hidden>
+        <h2>I tuoi dati</h2>
+        <label>Nome <input name="adultoNome" required maxlength="100" autocomplete="given-name"></label>
+        <label>Cognome <input name="adultoCognome" required maxlength="100" autocomplete="family-name"></label>
+        <label>Numero di cellulare <input name="adultoTelefono" type="tel" required autocomplete="tel"></label>
+        <label>Data di nascita <input name="adultoNascita" type="date" required></label>
+        <label>Hai già fatto karate in precedenza?
+          <select name="adultoEsperienza" required><option value="">Scegli…</option><option>Sì</option><option>No</option></select>
+        </label>
+      </section>
+
+      <section>
+        <h2>Contatti e dettagli</h2>
+        <label>Email <input name="email" type="email" required maxlength="150" autocomplete="email"></label>
+        <label>Comune di residenza <input name="comune" required maxlength="100" autocomplete="address-level2"></label>
+        <label>Ricordi il grado? (se hai già praticato) <input name="grado" maxlength="100"></label>
+      </section>
+
+      <section>
+        <h2>Scegli il giorno</h2>
+        <ul class="legenda" aria-label="Legenda">
+          <li><span class="pallino verde"></span> 3 posti liberi</li>
+          <li><span class="pallino giallo"></span> 2 posti liberi</li>
+          <li><span class="pallino rosso"></span> ultimo posto</li>
+          <li><span class="pallino pieno"></span> pieno</li>
+        </ul>
+        <div id="giorni"></div>
+        <input type="hidden" name="giorno" id="giorno">
+      </section>
+
+      <input class="trappola" name="trappola" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <p id="messaggio" role="status"></p>
+      <button type="submit" id="invia">Prenota la prova</button>
+    </div>
+  </form>
+
+  <section id="successo" hidden>
+    <h2>Prenotazione confermata! 🥋</h2>
+    <p id="dettagli"></p>
+    <p>Ti abbiamo inviato una email di conferma. A presto!</p>
+  </section>
+</main>
+
+<dialog id="dialogo">
+  <p><strong>Turno pieno</strong></p>
+  <p>Tutti i posti di questo giorno sono già stati prenotati. Scegli un altro giorno.</p>
+  <button type="button" id="chiudi">Ho capito</button>
+</dialog>
 </body>
 </html>
