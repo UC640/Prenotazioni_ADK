@@ -4,39 +4,51 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#111111">
+
   <title>Prenota una prova · ADKarate</title>
+
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
+
 <body>
 
 <header class="testata">
   <div class="testata-interna">
+
     <div class="logo">
-      <img src="ADKlogo.jpeg" alt="ADKlogo">
+      <img src="ADKlogo.jpeg" alt="Logo ADKarate">
     </div>
 
     <div class="marchio">
       <h1>AD<span>Karate</span></h1>
       <p>Prenota con noi la tua prima esperienza!</p>
     </div>
+
   </div>
 </header>
 
+
 <main>
+
+  <!-- INTRODUZIONE: visibile nella pagina iniziale -->
   <div class="introduzione">
-  <p class="intro">
-    Compila il modulo e scegli il giorno: riceverai la conferma tramite email.
-  </p>
-</div>
+    <p class="intro">
+      Compila il modulo e scegli il giorno: riceverai la conferma tramite email.
+    </p>
+  </div>
+
 
   <form id="form" novalidate>
 
+    <!-- PASSAGGIO 0: TIPO DI PRENOTAZIONE -->
     <fieldset id="selezioneTipo" class="passaggio" data-passaggio="0">
+
       <legend>Chi sta compilando il modulo?</legend>
 
       <label class="scelta">
         <input type="radio" name="tipo" value="genitore" required>
+
         <span>
           <strong>Sono un genitore</strong>
           <small>Prenoto una prova per mio figlio/a.</small>
@@ -45,66 +57,112 @@
 
       <label class="scelta">
         <input type="radio" name="tipo" value="adulto">
+
         <span>
           <strong>Sono maggiorenne</strong>
           <small>Prenoto una prova per me.</small>
         </span>
       </label>
+
     </fieldset>
 
+
+    <!-- CONTENUTO DEL MODULO -->
     <div id="dopo" hidden>
 
+
+      <!-- PASSAGGIO 1: DATI PERSONALI -->
       <section class="passaggio" data-passaggio="1">
 
+
+        <!-- DATI GENITORE E FIGLIO -->
         <section data-blocco="genitore" hidden>
+
           <div class="titolo-sezione">
             <span class="numero-sezione">01</span>
+
             <div>
               <h2>Dati del genitore</h2>
               <p>Inserisci i dati della persona di riferimento.</p>
             </div>
           </div>
 
+
           <div class="campi">
+
             <label>
               Nome
-              <input name="genitoreNome" required maxlength="100" autocomplete="given-name">
+              <input
+                name="genitoreNome"
+                type="text"
+                required
+                maxlength="100"
+                autocomplete="given-name"
+              >
             </label>
 
             <label>
               Cognome
-              <input name="genitoreCognome" required maxlength="100" autocomplete="family-name">
+              <input
+                name="genitoreCognome"
+                type="text"
+                required
+                maxlength="100"
+                autocomplete="family-name"
+              >
             </label>
 
             <label class="campo-intero">
               Telefono
-              <input name="genitoreTelefono" type="tel" required autocomplete="tel">
+              <input
+                name="genitoreTelefono"
+                type="tel"
+                required
+                autocomplete="tel"
+              >
             </label>
+
           </div>
 
-          <div class="titolo-sezione">
+
+          <div class="titolo-sezione titolo-sezione-secondario">
+
             <span class="numero-sezione">02</span>
+
             <div>
               <h2>Dati del figlio/a</h2>
               <p>Raccontaci chi parteciperà alla prova.</p>
             </div>
+
           </div>
 
+
           <div class="campi">
+
             <label>
               Nome
-              <input name="figlioNome" required maxlength="100">
+              <input
+                name="figlioNome"
+                type="text"
+                required
+                maxlength="100"
+              >
             </label>
 
             <label>
               Data di nascita
-              <input name="figlioNascita" type="date" required>
+              <input
+                name="figlioNascita"
+                type="date"
+                required
+              >
             </label>
 
             <label class="campo-intero">
               Ha già esperienza nel karate?
+
               <select name="figlioEsperienza" required>
-                <option value="">Scegli…</option>
+                <option value="">Scegli...</option>
                 <option>Sì</option>
                 <option>No</option>
               </select>
@@ -112,150 +170,300 @@
 
             <label class="campo-intero">
               Da chi verrà accompagnato?
-              <input name="accompagnatore" maxlength="100">
+
+              <input
+                name="accompagnatore"
+                type="text"
+                maxlength="100"
+              >
             </label>
 
             <label class="campo-intero">
               Parlaci brevemente di tuo figlio/a
-              <textarea name="figlioNote" rows="3" maxlength="1000"></textarea>
+
+              <textarea
+                name="figlioNote"
+                rows="4"
+                maxlength="1000"
+              ></textarea>
             </label>
+
           </div>
+
         </section>
 
+
+        <!-- DATI ADULTO -->
         <section data-blocco="adulto" hidden>
+
           <div class="titolo-sezione">
+
             <span class="numero-sezione">01</span>
+
             <div>
               <h2>I tuoi dati</h2>
               <p>Inserisci i dati per la tua prova.</p>
             </div>
+
           </div>
 
+
           <div class="campi">
+
             <label>
               Nome
-              <input name="adultoNome" required maxlength="100" autocomplete="given-name">
+
+              <input
+                name="adultoNome"
+                type="text"
+                required
+                maxlength="100"
+                autocomplete="given-name"
+              >
             </label>
 
             <label>
               Cognome
-              <input name="adultoCognome" required maxlength="100" autocomplete="family-name">
+
+              <input
+                name="adultoCognome"
+                type="text"
+                required
+                maxlength="100"
+                autocomplete="family-name"
+              >
             </label>
 
             <label class="campo-intero">
               Numero di cellulare
-              <input name="adultoTelefono" type="tel" required autocomplete="tel">
+
+              <input
+                name="adultoTelefono"
+                type="tel"
+                required
+                autocomplete="tel"
+              >
             </label>
 
             <label class="campo-intero">
               Data di nascita
-              <input name="adultoNascita" type="date" required>
+
+              <input
+                name="adultoNascita"
+                type="date"
+                required
+              >
             </label>
 
             <label class="campo-intero">
               Hai già fatto karate in precedenza?
+
               <select name="adultoEsperienza" required>
-                <option value="">Scegli…</option>
+                <option value="">Scegli...</option>
                 <option>Sì</option>
                 <option>No</option>
               </select>
             </label>
+
           </div>
+
         </section>
 
       </section>
 
+
+      <!-- PASSAGGIO 2: CONTATTI -->
       <section class="passaggio" data-passaggio="2">
+
         <div class="titolo-sezione">
+
           <span class="numero-sezione">03</span>
+
           <div>
             <h2>Contatti e dettagli</h2>
             <p>Come possiamo contattarti?</p>
           </div>
+
         </div>
 
+
         <div class="campi">
+
           <label class="campo-intero">
             Email
-            <input name="email" type="email" required maxlength="150" autocomplete="email">
+
+            <input
+              name="email"
+              type="email"
+              required
+              maxlength="150"
+              autocomplete="email"
+            >
           </label>
 
           <label class="campo-intero">
             Comune di residenza
-            <input name="comune" required maxlength="100" autocomplete="address-level2">
+
+            <input
+              name="comune"
+              type="text"
+              required
+              maxlength="100"
+              autocomplete="address-level2"
+            >
           </label>
 
           <label id="campoGrado" class="campo-intero" hidden>
             Ricordi il grado?
-            <input name="grado" maxlength="100" placeholder="Es. cintura bianca, gialla...">
+
+            <input
+              name="grado"
+              type="text"
+              maxlength="100"
+              placeholder="Es. cintura bianca, gialla..."
+            >
           </label>
+
         </div>
+
       </section>
 
+
+      <!-- PASSAGGIO 3: SCELTA DEL GIORNO -->
       <section class="passaggio" data-passaggio="3">
+
         <div class="titolo-sezione">
+
           <span class="numero-sezione">04</span>
+
           <div>
             <h2>Scegli il giorno</h2>
             <p>Seleziona una delle disponibilità qui sotto.</p>
           </div>
+
         </div>
 
+
         <ul class="legenda" aria-label="Legenda dei posti disponibili">
-          <li><span class="pallino verde"></span> 3 o più posti</li>
-          <li><span class="pallino giallo"></span> 2 posti</li>
-          <li><span class="pallino rosso"></span> Ultimo posto</li>
-          <li><span class="pallino pieno"></span> Pieno</li>
+
+          <li>
+            <span class="pallino verde"></span>
+            3 o più posti
+          </li>
+
+          <li>
+            <span class="pallino giallo"></span>
+            2 posti
+          </li>
+
+          <li>
+            <span class="pallino rosso"></span>
+            Ultimo posto
+          </li>
+
+          <li>
+            <span class="pallino pieno"></span>
+            Pieno
+          </li>
+
         </ul>
+
 
         <div id="giorni"></div>
 
         <input type="hidden" name="giorno" id="giorno">
+
       </section>
 
+
+      <!-- PASSAGGIO 4: RIEPILOGO -->
       <section class="passaggio" data-passaggio="4">
+
         <div class="titolo-sezione">
+
           <span class="numero-sezione">05</span>
+
           <div>
             <h2>Riepilogo della prenotazione</h2>
             <p>Controlla i dati prima di confermare.</p>
           </div>
+
         </div>
+
 
         <div id="riepilogo" class="riepilogo"></div>
 
         <p class="nota-riepilogo">
           Verifica che le informazioni siano corrette prima di inviare la prenotazione.
         </p>
+
       </section>
 
-      <input class="trappola" name="trappola" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <!-- CAMPO ANTISPAM -->
+      <input
+        class="trappola"
+        name="trappola"
+        tabindex="-1"
+        autocomplete="off"
+        aria-hidden="true"
+      >
+
     </div>
 
+
+    <!-- MESSAGGI DEL MODULO -->
     <p id="messaggio" role="status" aria-live="polite"></p>
 
-    <nav id="navigazione" class="navigazione" aria-label="Navigazione della prenotazione">
-      <button type="button" id="indietro" class="bottone-secondario" hidden>
+
+    <!-- NAVIGAZIONE -->
+    <nav
+      id="navigazione"
+      class="navigazione"
+      aria-label="Navigazione della prenotazione"
+    >
+
+      <button
+        type="button"
+        id="indietro"
+        class="bottone-secondario"
+        hidden
+      >
         ← Indietro
       </button>
 
-      <button type="button" id="avanti" class="bottone-principale">
+      <button
+        type="button"
+        id="avanti"
+        class="bottone-principale"
+      >
         Continua →
       </button>
 
-      <button type="submit" id="invia" class="bottone-principale" hidden>
+      <button
+        type="submit"
+        id="invia"
+        class="bottone-principale"
+        hidden
+      >
         Conferma prenotazione
       </button>
+
     </nav>
 
   </form>
 
+
+  <!-- CONFERMA: NON CONTIENE IL TESTO INTRODUTTIVO -->
   <section id="successo" hidden>
-    <div class="successo-simbolo">✓</div>
+
+    <div class="successo-simbolo" aria-hidden="true">✓</div>
 
     <p class="soprattitolo">TUTTO PRONTO</p>
+
     <h2>Prenotazione confermata!</h2>
 
+    <!-- Il JavaScript inserisce qui i dettagli della prenotazione -->
     <p id="dettagli" class="dettagli-conferma"></p>
 
     <p>
@@ -263,24 +471,44 @@
       Grazie per aver scelto ADKarate!
     </p>
 
-    <button type="button" id="nuovaPrenotazione" class="bottone-principale">
+    <button
+      type="button"
+      id="nuovaPrenotazione"
+      class="bottone-principale"
+    >
       Effettua una nuova prenotazione
     </button>
+
   </section>
 
-  <p class="nota-finale">ADKarate · La tua prossima esperienza comincia qui.</p>
+
+  <p class="nota-finale">
+    ADKarate · La tua prossima esperienza comincia qui.
+  </p>
+
 </main>
 
+
+<!-- FINESTRA DI AVVISO -->
 <dialog id="dialogo">
+
   <div class="dialogo-simbolo">!</div>
+
   <h2>Turno pieno</h2>
+
   <p>
     Tutti i posti di questo giorno sono già stati prenotati.
     Scegli un altro giorno.
   </p>
-  <button type="button" id="chiudi" class="bottone-principale">
+
+  <button
+    type="button"
+    id="chiudi"
+    class="bottone-principale"
+  >
     Ho capito
   </button>
+
 </dialog>
 
 </body>
