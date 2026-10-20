@@ -61,8 +61,6 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: #fff;
-  border-radius: 8px;
 }
 
 .logo img {
