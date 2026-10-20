@@ -11,14 +11,6 @@ const tipo = () => form.elements.tipo.value;
 
 let passaggioCorrente = 0;
 
-const titoliPassaggi = [
-  "Chi prenota?",
-  "I tuoi dati",
-  "Contatti e dettagli",
-  "Scegli il giorno",
-  "Riepilogo della prenotazione"
-];
-
 function mostraMessaggio(testo, errore) {
   messaggio.textContent = testo;
   messaggio.className = errore ? "errore" : "";
@@ -89,21 +81,6 @@ function aggiornaPassaggio() {
 
   document.getElementById("avanti").hidden = passaggioCorrente === 4;
   bottone.hidden = passaggioCorrente !== 4;
-
-  document.getElementById("titoloPassaggio").textContent =
-    titoliPassaggi[passaggioCorrente];
-
-  document.getElementById("numeroPassaggio").textContent =
-    `${passaggioCorrente + 1} / ${titoliPassaggi.length}`;
-
-  document.getElementById("progresso").style.width =
-    `${((passaggioCorrente + 1) / titoliPassaggi.length) * 100}%`;
-
-  document.querySelectorAll("[data-etichetta]").forEach((etichetta) => {
-    const numero = Number(etichetta.dataset.etichetta);
-
-    etichetta.classList.toggle("attivo", numero === passaggioCorrente);
-  });
 
   mostraMessaggio("");
 
