@@ -823,3 +823,138 @@ dialog button {
     padding: 10px;
   }
 }
+
+/* ==============================
+   MIGLIORAMENTO SPAZIATURE MODULO
+   ============================== */
+
+/* Evita che padding e bordi allarghino i campi */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Spazio tra i gruppi di campi */
+.campi {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 20px;
+  margin-top: 24px;
+  margin-bottom: 32px;
+}
+
+/* Etichette e campi sempre separati */
+.campi label {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 9px;
+  min-width: 0;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+/* Campi che occupano tutta la larghezza */
+.campi .campo-intero {
+  grid-column: 1 / -1;
+}
+
+/* Spazio interno ai campi */
+.campi input,
+.campi select,
+.campi textarea {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 13px 14px;
+  font: inherit;
+  line-height: 1.5;
+  border-radius: 8px;
+}
+
+/* Le aree di testo non devono sovrapporsi */
+.campi textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+/* Spazio tra le sezioni */
+.titolo-sezione {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-top: 30px;
+  margin-bottom: 12px;
+}
+
+/* Prima sezione più vicina all'inizio del passaggio */
+.passaggio > .titolo-sezione:first-child,
+.passaggio > section > .titolo-sezione:first-child {
+  margin-top: 0;
+}
+
+/* Distanza tra dati del genitore e dati del figlio */
+.titolo-sezione-secondario {
+  margin-top: 38px;
+  padding-top: 26px;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* Titoli e descrizioni non devono restringersi */
+.titolo-sezione > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.titolo-sezione h2 {
+  margin: 0 0 8px;
+  line-height: 1.3;
+  overflow-wrap: break-word;
+}
+
+.titolo-sezione p {
+  margin: 0;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+/* Più spazio interno ai passaggi */
+.passaggio {
+  min-width: 0;
+}
+
+/* Migliora la visualizzazione sui telefoni */
+@media (max-width: 600px) {
+  .campi {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 26px;
+  }
+
+  .campi label,
+  .campi .campo-intero {
+    grid-column: 1 / -1;
+  }
+
+  .campi input,
+  .campi select,
+  .campi textarea {
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  .titolo-sezione {
+    gap: 12px;
+    margin-top: 26px;
+    margin-bottom: 12px;
+  }
+
+  .titolo-sezione-secondario {
+    margin-top: 30px;
+    padding-top: 22px;
+  }
+}
