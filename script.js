@@ -6,6 +6,7 @@ const giornoInput = document.getElementById("giorno");
 const messaggio = document.getElementById("messaggio");
 const bottone = document.getElementById("invia");
 const dialogo = document.getElementById("dialogo");
+const introduzione = document.getElementById("introduzione");
 
 const tipo = () => form.elements.tipo.value;
 
@@ -23,8 +24,8 @@ function nota(testo, classe) {
   giorniBox.replaceChildren(p);
 }
 
-// Mostra il blocco del genitore o dell'adulto; i campi nascosti vengono disattivati
-// così non vengono validati né inviati.
+// Mostra il blocco del genitore o dell'adulto.
+// I campi nascosti vengono disattivati, così non vengono validati né inviati.
 function aggiornaBlocchi() {
   document.getElementById("dopo").hidden = !tipo();
 
@@ -58,7 +59,7 @@ function aggiornaGrado() {
 
   campoGrado.hidden = !visibile;
 
-  // Mantiene il campo originale "grado" anche quando non è visibile.
+  // Mantiene il campo originale "grado".
   // Se la persona risponde "No", il valore viene lasciato vuoto.
   if (!visibile) {
     grado.value = "";
@@ -77,9 +78,12 @@ function aggiornaPassaggio() {
     elemento.hidden = numero !== passaggioCorrente;
   });
 
-  document.getElementById("indietro").hidden = passaggioCorrente === 0;
+  document.getElementById("indietro").hidden =
+    passaggioCorrente === 0;
 
-  document.getElementById("avanti").hidden = passaggioCorrente === 4;
+  document.getElementById("avanti").hidden =
+    passaggioCorrente === 4;
+
   bottone.hidden = passaggioCorrente !== 4;
 
   mostraMessaggio("");
@@ -95,7 +99,9 @@ function aggiornaPassaggio() {
 
 function controllaPassaggio() {
   if (passaggioCorrente === 0) {
-    const selezionato = form.querySelector('input[name="tipo"]:checked');
+    const selezionato = form.querySelector(
+      'input[name="tipo"]:checked'
+    );
 
     if (!selezionato) {
       form.querySelector('input[name="tipo"]').reportValidity();
@@ -392,7 +398,8 @@ async function invia(evento) {
   try {
     const dati = Object.fromEntries(new FormData(form));
 
-    // text/plain evita la richiesta "preflight" CORS, che Apps Script non gestisce.
+    // text/plain evita la richiesta preflight CORS,
+    // che Google Apps Script non gestisce come una normale API.
     const risposta = await (await fetch(API_URL, {
       method: "POST",
       headers: {
@@ -405,7 +412,9 @@ async function invia(evento) {
       document.getElementById("dettagli").textContent =
         `${risposta.data} · ${risposta.corso} (${risposta.orario})`;
 
+      // Nasconde il modulo e l'introduzione dopo la conferma.
       form.hidden = true;
+      introduzione.hidden = true;
       document.getElementById("successo").hidden = false;
 
       window.scrollTo(0, 0);
@@ -430,7 +439,9 @@ async function invia(evento) {
 function nuovaPrenotazione() {
   form.reset();
 
+  // Mostra nuovamente il modulo e l'introduzione.
   form.hidden = false;
+  introduzione.hidden = false;
   document.getElementById("successo").hidden = true;
 
   passaggioCorrente = 0;
@@ -446,28 +457,56 @@ function nuovaPrenotazione() {
   window.scrollTo(0, 0);
 }
 
+// Gestione della scelta tra genitore e adulto.
 form.elements.tipo.forEach((r) => {
   r.addEventListener("change", aggiornaBlocchi);
 });
 
-form.elements.figlioNascita.addEventListener("change", caricaGiorni);
+// Aggiornamento dei giorni disponibili quando cambia la data di nascita.
+form.elements.figlioNascita.addEventListener(
+  "change",
+  caricaGiorni
+);
 
-form.elements.figlioEsperienza.addEventListener("change", aggiornaGrado);
-form.elements.adultoEsperienza.addEventListener("change", aggiornaGrado);
+// Aggiornamento del campo grado in base all'esperienza.
+form.elements.figlioEsperienza.addEventListener(
+  "change",
+  aggiornaGrado
+);
 
-document.getElementById("avanti").addEventListener("click", vaiAvanti);
-document.getElementById("indietro").addEventListener("click", vaiIndietro);
+form.elements.adultoEsperienza.addEventListener(
+  "change",
+  aggiornaGrado
+);
 
+// Navigazione tra i passaggi.
+document.getElementById("avanti").addEventListener(
+  "click",
+  vaiAvanti
+);
+
+document.getElementById("indietro").addEventListener(
+  "click",
+  vaiIndietro
+);
+
+// Invio della prenotazione.
 form.addEventListener("submit", invia);
 
-document.getElementById("chiudi").addEventListener("click", () => {
-  dialogo.close();
-});
+// Chiusura della finestra informativa sui posti esauriti.
+document.getElementById("chiudi").addEventListener(
+  "click",
+  () => {
+    dialogo.close();
+  }
+);
 
+// Avvio di una nuova prenotazione.
 document.getElementById("nuovaPrenotazione").addEventListener(
   "click",
   nuovaPrenotazione
 );
 
+// Inizializzazione della pagina.
 aggiornaBlocchi();
 aggiornaPassaggio();
