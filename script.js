@@ -106,6 +106,7 @@ function controllaPassaggio() {
 function vaiAvanti() {
   if (!controllaPassaggio()) return;
   if (passaggioCorrente < 4) {
+    form.dataset.dir = "avanti";
     passaggioCorrente++;
     aggiornaPassaggio();
     window.scrollTo(0, 0);
@@ -114,6 +115,7 @@ function vaiAvanti() {
 
 function vaiIndietro() {
   if (passaggioCorrente > 0) {
+    form.dataset.dir = "indietro";
     passaggioCorrente--;
     aggiornaPassaggio();
     window.scrollTo(0, 0);
@@ -309,6 +311,7 @@ function nuovaPrenotazione() {
   introduzione.hidden = false;
   document.getElementById("successo").hidden = true;
 
+  form.dataset.dir = "indietro";
   passaggioCorrente = 0;
   giornoInput.value = "";
   giorniBox.replaceChildren();
