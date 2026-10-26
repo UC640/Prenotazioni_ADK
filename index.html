@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0d0d0d">
+  <meta name="theme-color" content="#0b0b0f">
   <title>Prenota una prova · ADKarate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,700;1,800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
@@ -18,11 +21,10 @@
 <main>
   <p id="introduzione" class="intro">Compila il modulo e scegli il giorno: riceverai la conferma via email.</p>
 
-  <form id="form" novalidate>
+  <form id="form" novalidate data-dir="avanti">
 
-    <!-- 0 · TIPO -->
     <fieldset id="selezioneTipo" class="passaggio" data-passaggio="0">
-      <legend>Chi compila il modulo?</legend>
+      <legend>Chi compila?</legend>
       <label class="scelta">
         <input type="radio" name="tipo" value="genitore" required>
         <span><strong>Sono un genitore</strong><small>Prenoto per mio figlio/a</small></span>
@@ -35,37 +37,35 @@
 
     <div id="dopo" hidden>
 
-      <!-- 1 · DATI PERSONALI -->
       <section class="passaggio" data-passaggio="1">
 
         <section data-blocco="genitore" hidden>
           <h2>Genitore</h2>
           <div class="campi">
-            <label>Nome <input name="genitoreNome" type="text" placeholder="Nome" required maxlength="100" autocomplete="given-name"></label>
-            <label>Cognome <input name="genitoreCognome" type="text" placeholder="Cognome" required maxlength="100" autocomplete="family-name"></label>
-            <label class="campo-intero">Telefono <input name="genitoreTelefono" type="tel" placeholder="Es. 333 1234567" required autocomplete="tel"></label>
+            <label>Nome <input name="genitoreNome" placeholder="Es. Marco" required maxlength="100" autocomplete="given-name"></label>
+            <label>Cognome <input name="genitoreCognome" placeholder="Es. Rossi" required maxlength="100" autocomplete="family-name"></label>
+            <label class="intero">Telefono <input name="genitoreTelefono" type="tel" placeholder="Es. 3331234567" required autocomplete="tel"></label>
           </div>
-
           <h2 class="secondario">Figlio/a</h2>
           <div class="campi">
-            <label>Nome <input name="figlioNome" type="text" placeholder="Nome" required maxlength="100"></label>
+            <label>Nome <input name="figlioNome" placeholder="Es. Luca" required maxlength="100"></label>
             <label>Data di nascita <input name="figlioNascita" type="date" required></label>
-            <label class="campo-intero">Ha già esperienza nel karate?
+            <label class="intero">Ha già fatto karate?
               <select name="figlioEsperienza" required><option value="">Scegli…</option><option>Sì</option><option>No</option></select>
             </label>
-            <label class="campo-intero">Da chi verrà accompagnato? <input name="accompagnatore" type="text" placeholder="Es. mamma, nonno…" maxlength="100"></label>
-            <label class="campo-intero">Parlaci brevemente di tuo figlio/a <textarea name="figlioNote" rows="4" placeholder="Carattere, sport già praticati…" maxlength="1000"></textarea></label>
+            <label class="intero">Chi lo accompagna? <input name="accompagnatore" placeholder="Es. Mamma" maxlength="100"></label>
+            <label class="intero">Qualcosa da dirci? <textarea name="figlioNote" rows="3" placeholder="Es. Timido, ama il calcio" maxlength="1000"></textarea></label>
           </div>
         </section>
 
         <section data-blocco="adulto" hidden>
           <h2>I tuoi dati</h2>
           <div class="campi">
-            <label>Nome <input name="adultoNome" type="text" placeholder="Nome" required maxlength="100" autocomplete="given-name"></label>
-            <label>Cognome <input name="adultoCognome" type="text" placeholder="Cognome" required maxlength="100" autocomplete="family-name"></label>
-            <label class="campo-intero">Cellulare <input name="adultoTelefono" type="tel" placeholder="Es. 333 1234567" required autocomplete="tel"></label>
-            <label class="campo-intero">Data di nascita <input name="adultoNascita" type="date" required></label>
-            <label class="campo-intero">Hai già fatto karate?
+            <label>Nome <input name="adultoNome" placeholder="Es. Marco" required maxlength="100" autocomplete="given-name"></label>
+            <label>Cognome <input name="adultoCognome" placeholder="Es. Rossi" required maxlength="100" autocomplete="family-name"></label>
+            <label class="intero">Cellulare <input name="adultoTelefono" type="tel" placeholder="Es. 3331234567" required autocomplete="tel"></label>
+            <label class="intero">Data di nascita <input name="adultoNascita" type="date" required></label>
+            <label class="intero">Hai già fatto karate?
               <select name="adultoEsperienza" required><option value="">Scegli…</option><option>Sì</option><option>No</option></select>
             </label>
           </div>
@@ -73,17 +73,15 @@
 
       </section>
 
-      <!-- 2 · CONTATTI -->
       <section class="passaggio" data-passaggio="2">
         <h2>Contatti</h2>
         <div class="campi">
-          <label class="campo-intero">Email <input name="email" type="email" placeholder="nome@email.it" required maxlength="150" autocomplete="email"></label>
-          <label class="campo-intero">Comune di residenza <input name="comune" type="text" placeholder="Es. Milano" required maxlength="100" autocomplete="address-level2"></label>
-          <label id="campoGrado" class="campo-intero" hidden>Ricordi il grado? <input name="grado" type="text" placeholder="Es. cintura gialla" maxlength="100"></label>
+          <label class="intero">Email <input name="email" type="email" placeholder="Es. marco@email.it" required maxlength="150" autocomplete="email"></label>
+          <label class="intero">Comune di residenza <input name="comune" placeholder="Es. Milano" required maxlength="100" autocomplete="address-level2"></label>
+          <label id="campoGrado" class="intero" hidden>Ricordi il grado? <input name="grado" placeholder="Es. Cintura gialla" maxlength="100"></label>
         </div>
       </section>
 
-      <!-- 3 · GIORNO -->
       <section class="passaggio" data-passaggio="3">
         <h2>Scegli il giorno</h2>
         <ul class="legenda" aria-label="Legenda dei posti">
@@ -96,7 +94,6 @@
         <input type="hidden" name="giorno" id="giorno">
       </section>
 
-      <!-- 4 · RIEPILOGO -->
       <section class="passaggio" data-passaggio="4">
         <h2>Riepilogo</h2>
         <div id="riepilogo" class="riepilogo"></div>
@@ -108,25 +105,28 @@
     <p id="messaggio" role="status" aria-live="polite"></p>
 
     <nav id="navigazione" class="navigazione" aria-label="Navigazione">
-      <button type="button" id="indietro" class="bottone-secondario" hidden>← Indietro</button>
-      <button type="button" id="avanti" class="bottone-principale">Continua →</button>
-      <button type="submit" id="invia" class="bottone-principale" hidden>Conferma prenotazione</button>
+      <button type="button" id="indietro" class="freccia" aria-label="Indietro" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <button type="button" id="avanti" class="freccia" aria-label="Avanti">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <button type="submit" id="invia" class="conferma" hidden>Conferma prenotazione</button>
     </nav>
   </form>
 
-  <!-- DOPO L'INVIO -->
   <section id="successo" hidden>
     <img src="ADKlogo.jpeg" alt="Logo ADKarate">
     <h2>Grazie per aver prenotato!</h2>
     <p>Controlla la tua casella di posta: ti abbiamo inviato la conferma (guarda anche nello spam).</p>
-    <button type="button" id="nuovaPrenotazione" class="bottone-principale">Nuova prenotazione</button>
+    <button type="button" id="nuovaPrenotazione" class="conferma">Nuova prenotazione</button>
   </section>
 </main>
 
 <dialog id="dialogo">
   <h2>Turno pieno</h2>
   <p>Tutti i posti di questo giorno sono già stati prenotati. Scegli un altro giorno.</p>
-  <button type="button" id="chiudi" class="bottone-principale">Ho capito</button>
+  <button type="button" id="chiudi" class="conferma">Ho capito</button>
 </dialog>
 
 </body>
