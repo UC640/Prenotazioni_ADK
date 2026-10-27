@@ -1,338 +1,195 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbxXVHHGaC5iXk3ep0XHQHAp6E5sa7zuwuxfcccwC3svJVr5MDGQqFAtCrNhYqpGu0YKfA/exec";
 
-const form = document.getElementById("form");
-const giorniBox = document.getElementById("giorni");
-const giornoInput = document.getElementById("giorno");
-const messaggio = document.getElementById("messaggio");
-const bottone = document.getElementById("invia");
-const dialogo = document.getElementById("dialogo");
-const introduzione = document.getElementById("introduzione");
-
+const $ = (id) => document.getElementById(id);
+const form = $("form"), giorniBox = $("giorni"), giornoInput = $("giorno");
 const tipo = () => form.elements.tipo.value;
+const val = (nome) => (form.elements[nome]?.value || "").trim();
+let passo = 0;
 
-let passaggioCorrente = 0;
-
-function mostraMessaggio(testo, errore) {
-  messaggio.textContent = testo;
-  messaggio.className = errore ? "errore" : "";
+function el(tag, classe, testo) {
+  const e = document.createElement(tag);
+  if (classe) e.className = classe;
+  if (testo !== undefined) e.textContent = testo;
+  return e;
 }
 
-function nota(testo, classe) {
-  const p = document.createElement("p");
-  p.className = classe || "nota";
-  p.textContent = testo;
-  giorniBox.replaceChildren(p);
+function messaggio(testo, errore) {
+  $("messaggio").textContent = testo;
+  $("messaggio").className = errore ? "errore" : "";
 }
 
-// Mostra il blocco del genitore o dell'adulto.
-// I campi nascosti vengono disattivati, così non vengono validati né inviati.
-function aggiornaBlocchi() {
-  document.getElementById("dopo").hidden = !tipo();
+function nota(testo, errore) {
+  giorniBox.replaceChildren(el("p", errore ? "nota errore" : "nota", testo));
+}
 
-  document.querySelectorAll("[data-blocco]").forEach((blocco) => {
-    const attivo = blocco.dataset.blocco === tipo();
-    blocco.hidden = !attivo;
-    blocco.querySelectorAll("input, select, textarea").forEach((c) => {
-      c.disabled = !attivo;
-    });
+// Genitore o adulto: i campi del blocco nascosto vengono disattivati (non validati né inviati).
+function aggiornaTipo() {
+  document.querySelectorAll("[data-blocco]").forEach((b) => {
+    const attivo = b.dataset.blocco === tipo();
+    b.hidden = !attivo;
+    b.querySelectorAll("input, select, textarea").forEach((c) => (c.disabled = !attivo));
   });
-
   aggiornaGrado();
   caricaGiorni();
 }
 
-// Il campo "grado" compare solo se la persona ha già fatto karate.
+// Il grado si chiede solo a chi ha già fatto karate.
 function aggiornaGrado() {
-  const campoGrado = document.getElementById("campoGrado");
-  let esperienza = "";
-
-  if (tipo() === "genitore") esperienza = form.elements.figlioEsperienza.value;
-  else if (tipo() === "adulto") esperienza = form.elements.adultoEsperienza.value;
-
-  const visibile = esperienza === "Sì";
-  campoGrado.hidden = !visibile;
-  if (!visibile) form.elements.grado.value = "";
+  const esperienza = tipo() === "genitore" ? val("figlioEsperienza") : tipo() === "adulto" ? val("adultoEsperienza") : "";
+  $("campoGrado").hidden = esperienza !== "Sì";
+  if (esperienza !== "Sì") form.elements.grado.value = "";
 }
 
-function aggiornaPassaggio() {
-  document.getElementById("selezioneTipo").hidden = passaggioCorrente !== 0;
-  document.getElementById("dopo").hidden = !tipo();
-
-  document.querySelectorAll("[data-passaggio]").forEach((elemento) => {
-    elemento.hidden = Number(elemento.dataset.passaggio) !== passaggioCorrente;
-  });
-
-  document.getElementById("indietro").hidden = passaggioCorrente === 0;
-  document.getElementById("avanti").hidden = passaggioCorrente === 4;
-  bottone.hidden = passaggioCorrente !== 4;
-
-  mostraMessaggio("");
-
-  if (passaggioCorrente === 3) caricaGiorni();
-  if (passaggioCorrente === 4) aggiornaRiepilogo();
+function mostraPasso() {
+  $("dopo").hidden = !tipo();
+  document.querySelectorAll("[data-passo]").forEach((s) => (s.hidden = Number(s.dataset.passo) !== passo));
+  $("indietro").hidden = passo === 0;
+  $("avanti").hidden = passo === 4;
+  $("invia").hidden = passo !== 4;
+  messaggio("");
+  if (passo === 3) caricaGiorni();
+  if (passo === 4) riepilogo();
 }
 
-// Controlla i campi del passaggio corrente prima di andare avanti.
-function controllaPassaggio() {
-  if (passaggioCorrente === 0) {
-    if (!form.querySelector('input[name="tipo"]:checked')) {
-      form.querySelector('input[name="tipo"]').reportValidity();
-      return false;
-    }
-    return true;
+function passoValido() {
+  if (passo === 0) {
+    if (tipo()) return true;
+    messaggio("Scegli un'opzione per continuare.", true);
+    return false;
   }
-
-  if (passaggioCorrente === 3) {
-    if (!giornoInput.value) {
-      mostraMessaggio("Scegli un giorno per la prova.", true);
-      return false;
-    }
-    return true;
+  if (passo === 3) {
+    if (giornoInput.value) return true;
+    messaggio("Scegli un giorno per la prova.", true);
+    return false;
   }
-
-  const passaggio = document.querySelector(`[data-passaggio="${passaggioCorrente}"]`);
-  if (!passaggio) return true;
-
-  for (const campo of passaggio.querySelectorAll("input, select, textarea")) {
-    if (campo.disabled || campo.closest("[hidden]") || campo.type === "hidden") continue;
-    if (!campo.checkValidity()) {
-      campo.reportValidity();
-      return false;
-    }
+  const sezione = document.querySelector(`[data-passo="${passo}"]`);
+  for (const c of sezione.querySelectorAll("input, select, textarea")) {
+    if (c.disabled || c.type === "hidden" || c.closest("[hidden]")) continue;
+    if (!c.checkValidity()) return c.reportValidity(), false;
   }
   return true;
 }
 
-function vaiAvanti() {
-  if (!controllaPassaggio()) return;
-  if (passaggioCorrente < 4) {
-    form.dataset.dir = "avanti";
-    passaggioCorrente++;
-    aggiornaPassaggio();
-    window.scrollTo(0, 0);
-  }
-}
-
-function vaiIndietro() {
-  if (passaggioCorrente > 0) {
-    form.dataset.dir = "indietro";
-    passaggioCorrente--;
-    aggiornaPassaggio();
-    window.scrollTo(0, 0);
-  }
+function vai(delta) {
+  if (delta > 0 && !passoValido()) return;
+  passo += delta;
+  mostraPasso();
+  window.scrollTo(0, 0);
 }
 
 async function caricaGiorni() {
   giornoInput.value = "";
   if (!tipo()) return;
 
-  const nascita = tipo() === "genitore" ? form.elements.figlioNascita.value : "";
+  const nascita = tipo() === "genitore" ? val("figlioNascita") : "";
+  if (tipo() === "genitore" && !nascita) return nota("Inserisci la data di nascita del figlio/a per vedere i giorni disponibili.");
 
-  if (tipo() === "genitore" && !nascita) {
-    return nota("Inserisci la data di nascita del figlio/a per vedere i giorni disponibili.");
-  }
-
-  nota("Caricamento dei giorni…");
-
+  nota("Caricamento…");
   try {
     const url = `${API_URL}?azione=disponibilita&tipo=${tipo()}&nascita=${encodeURIComponent(nascita)}`;
-    const risposta = await (await fetch(url)).json();
-    if (!risposta.ok) throw new Error(risposta.errore);
-    disegnaGiorni(risposta.giorni);
+    const r = await (await fetch(url)).json();
+    if (!r.ok) throw new Error(r.errore);
+    disegnaGiorni(r.giorni);
   } catch (err) {
-    nota(err.message || "Impossibile caricare i giorni. Riprova.", "errore");
+    nota(err.message || "Impossibile caricare i giorni. Riprova.", true);
   }
 }
 
+// Sul giorno compaiono solo giorno della settimana e data: i posti si leggono dal colore.
 function disegnaGiorni(giorni) {
   if (!giorni.length) return nota("Al momento non ci sono giorni disponibili.");
 
-  const bottoni = giorni.map((g) => {
-    const livello =
-      g.postiRimasti >= 3 ? "verde"
-      : g.postiRimasti === 2 ? "giallo"
-      : g.postiRimasti === 1 ? "rosso"
-      : "pieno";
-
-    const testoPosti = {
-      verde: `${g.postiRimasti} posti`,
-      giallo: "2 posti",
-      rosso: "Ultimo posto",
-      pieno: "Pieno"
-    }[livello];
-
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = `giorno ${livello}`;
-    b.dataset.data = g.data;
-    if (livello === "pieno") b.setAttribute("aria-disabled", "true");
-
-    // Sul giorno compaiono solo il giorno della settimana e la data (es. "lunedì" + "02/11").
-    // I posti si capiscono dal colore e dalla legenda; per gli screen reader c'è l'aria-label.
+  giorniBox.replaceChildren(...giorni.map((g) => {
+    const livello = g.postiRimasti >= 3 ? "verde" : g.postiRimasti === 2 ? "giallo" : g.postiRimasti === 1 ? "rosso" : "pieno";
     const [sett, data] = g.etichetta.split(" ");
-    b.dataset.etichetta = g.etichetta;
-    b.setAttribute("aria-label", `${g.etichetta}, ${testoPosti}`);
 
-    const s = document.createElement("span");
-    s.textContent = sett;
-    const d = document.createElement("strong");
-    d.textContent = data.slice(0, 5);
-    b.append(s, d);
+    const b = el("button", `giorno ${livello}`);
+    b.type = "button";
+    b.dataset.etichetta = g.etichetta;
+    b.setAttribute("aria-label", `${g.etichetta}, ${livello === "pieno" ? "pieno" : g.postiRimasti + " posti"}`);
+    b.append(el("span", "", sett), el("strong", "", data.slice(0, 5)));
 
     b.addEventListener("click", () => {
-      if (livello === "pieno") return dialogo.showModal();
-
+      if (livello === "pieno") return $("dialogo").showModal();
       giorniBox.querySelectorAll(".giorno").forEach((x) => x.classList.remove("scelto"));
       b.classList.add("scelto");
       giornoInput.value = g.data;
-      mostraMessaggio("");
+      messaggio("");
     });
-
     return b;
+  }));
+}
+
+function riepilogo() {
+  const gruppi = tipo() === "genitore"
+    ? [["Genitore", [["Nome", val("genitoreNome")], ["Cognome", val("genitoreCognome")], ["Telefono", val("genitoreTelefono")]]],
+       ["Figlio/a", [["Nome", val("figlioNome")], ["Data di nascita", val("figlioNascita")], ["Ha già fatto karate", val("figlioEsperienza")], ["Accompagnatore", val("accompagnatore")], ["Note", val("figlioNote")]]]]
+    : [["Dati personali", [["Nome", val("adultoNome")], ["Cognome", val("adultoCognome")], ["Telefono", val("adultoTelefono")], ["Data di nascita", val("adultoNascita")], ["Ha già fatto karate", val("adultoEsperienza")]]]];
+
+  gruppi.push(["Contatti", [["Email", val("email")], ["Comune", val("comune")], ["Grado", val("grado")]]]);
+  gruppi.push(["Prova", [["Giorno", giorniBox.querySelector(".scelto")?.dataset.etichetta || giornoInput.value]]]);
+
+  const box = $("riepilogo");
+  box.replaceChildren();
+  gruppi.forEach(([titolo, righe]) => {
+    box.append(el("h3", "", titolo));
+    righe.forEach(([nome, valore]) => {
+      const riga = el("dl");
+      riga.append(el("dt", "", nome), el("dd", "", valore || "—"));
+      box.append(riga);
+    });
   });
-
-  giorniBox.replaceChildren(...bottoni);
-}
-
-function valore(nome) {
-  const elemento = form.elements[nome];
-  return elemento ? String(elemento.value || "").trim() : "";
-}
-
-function aggiungiGruppoRiepilogo(titolo, righe, contenitore) {
-  const gruppo = document.createElement("section");
-  gruppo.className = "riepilogo-gruppo";
-
-  const intestazione = document.createElement("h3");
-  intestazione.textContent = titolo;
-  gruppo.appendChild(intestazione);
-
-  righe.forEach(([etichetta, testo]) => {
-    const riga = document.createElement("dl");
-    riga.className = "riepilogo-riga";
-
-    const nome = document.createElement("dt");
-    nome.textContent = etichetta;
-    const valoreRiga = document.createElement("dd");
-    valoreRiga.textContent = testo || "—";
-
-    riga.append(nome, valoreRiga);
-    gruppo.appendChild(riga);
-  });
-
-  contenitore.appendChild(gruppo);
-}
-
-function aggiornaRiepilogo() {
-  const riepilogo = document.getElementById("riepilogo");
-  riepilogo.replaceChildren();
-
-  if (tipo() === "genitore") {
-    aggiungiGruppoRiepilogo("Genitore", [
-      ["Nome", valore("genitoreNome")],
-      ["Cognome", valore("genitoreCognome")],
-      ["Telefono", valore("genitoreTelefono")]
-    ], riepilogo);
-
-    aggiungiGruppoRiepilogo("Figlio/a", [
-      ["Nome", valore("figlioNome")],
-      ["Data di nascita", valore("figlioNascita")],
-      ["Esperienza nel karate", valore("figlioEsperienza")],
-      ["Accompagnatore", valore("accompagnatore")],
-      ["Note", valore("figlioNote")]
-    ], riepilogo);
-  } else {
-    aggiungiGruppoRiepilogo("Dati personali", [
-      ["Nome", valore("adultoNome")],
-      ["Cognome", valore("adultoCognome")],
-      ["Telefono", valore("adultoTelefono")],
-      ["Data di nascita", valore("adultoNascita")],
-      ["Esperienza nel karate", valore("adultoEsperienza")]
-    ], riepilogo);
-  }
-
-  aggiungiGruppoRiepilogo("Contatti", [
-    ["Email", valore("email")],
-    ["Comune", valore("comune")],
-    ["Grado", valore("grado")]
-  ], riepilogo);
-
-  const giornoScelto = giorniBox.querySelector(".giorno.scelto");
-
-  aggiungiGruppoRiepilogo("Prova", [
-    ["Giorno", giornoScelto ? giornoScelto.dataset.etichetta : giornoInput.value]
-  ], riepilogo);
 }
 
 async function invia(evento) {
   evento.preventDefault();
+  if (passo !== 4) return;
 
-  if (passaggioCorrente !== 4) return;
-
-  if (!giornoInput.value) {
-    mostraMessaggio("Torna alla scelta del giorno e seleziona una disponibilità.", true);
-    return;
-  }
-
-  bottone.disabled = true;
-  mostraMessaggio("Invio in corso…");
-
+  $("invia").disabled = true;
+  messaggio("Invio in corso…");
   try {
-    const dati = Object.fromEntries(new FormData(form));
-
     // text/plain evita la richiesta preflight CORS, che Apps Script non gestisce.
-    const risposta = await (await fetch(API_URL, {
+    const r = await (await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(dati)
+      body: JSON.stringify(Object.fromEntries(new FormData(form)))
     })).json();
 
-    if (risposta.ok) {
-      // Nasconde modulo e introduzione, mostra logo + ringraziamento + promemoria.
-      form.hidden = true;
-      introduzione.hidden = true;
-      document.getElementById("successo").hidden = false;
+    if (r.ok) {
+      form.hidden = $("intro").hidden = true;
+      $("successo").hidden = false;
       window.scrollTo(0, 0);
     } else {
-      mostraMessaggio(risposta.errore || "Prenotazione non riuscita.", true);
+      messaggio(r.errore || "Prenotazione non riuscita.", true);
       caricaGiorni();   // aggiorna i posti: potrebbero essersi esauriti nel frattempo
     }
   } catch (err) {
-    mostraMessaggio("Connessione non riuscita. Riprova tra poco.", true);
+    messaggio("Connessione non riuscita. Riprova tra poco.", true);
   } finally {
-    bottone.disabled = false;
+    $("invia").disabled = false;
   }
 }
 
 function nuovaPrenotazione() {
   form.reset();
-
-  form.hidden = false;
-  introduzione.hidden = false;
-  document.getElementById("successo").hidden = true;
-
-  form.dataset.dir = "indietro";
-  passaggioCorrente = 0;
-  giornoInput.value = "";
+  form.hidden = $("intro").hidden = $("successo").hidden = false;
+  $("successo").hidden = true;
+  passo = 0;
   giorniBox.replaceChildren();
-
-  aggiornaBlocchi();
-  aggiornaPassaggio();
-  mostraMessaggio("");
+  aggiornaTipo();
+  mostraPasso();
   window.scrollTo(0, 0);
 }
 
-// Eventi
-form.elements.tipo.forEach((r) => r.addEventListener("change", aggiornaBlocchi));
+form.elements.tipo.forEach((r) => r.addEventListener("change", aggiornaTipo));
 form.elements.figlioNascita.addEventListener("change", caricaGiorni);
 form.elements.figlioEsperienza.addEventListener("change", aggiornaGrado);
 form.elements.adultoEsperienza.addEventListener("change", aggiornaGrado);
-document.getElementById("avanti").addEventListener("click", vaiAvanti);
-document.getElementById("indietro").addEventListener("click", vaiIndietro);
+$("avanti").addEventListener("click", () => vai(1));
+$("indietro").addEventListener("click", () => vai(-1));
+$("chiudi").addEventListener("click", () => $("dialogo").close());
+$("nuova").addEventListener("click", nuovaPrenotazione);
 form.addEventListener("submit", invia);
-document.getElementById("chiudi").addEventListener("click", () => dialogo.close());
-document.getElementById("nuovaPrenotazione").addEventListener("click", nuovaPrenotazione);
 
-// Avvio
-aggiornaBlocchi();
-aggiornaPassaggio();
+aggiornaTipo();
+mostraPasso();
