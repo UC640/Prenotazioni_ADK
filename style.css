@@ -1,21 +1,43 @@
+/* ==================================================
+   ADKARATE — PALETTE UFFICIALE
+   ================================================== */
+
 :root {
-  --nero: #0a0a0a;
-  --rosso: #d71920;
-  --rosso-scuro: #a50f15;
+  --porcelain: #FFFFFA;
+  --burnt-rose: #8C2F39;
+  --bright-marine: #296EB4;
+  --coffee-bean: #0E0004;
+  --red: #FF1B1C;
 
-  --blu: #1d4ed8;
-  --blu-scuro: #0b2a5b;
-  --blu-chiaro: #e8eefc;
+  /* Colori funzionali */
+  --sfondo: var(--porcelain);
+  --superficie: #FFFFFF;
+  --testo: var(--coffee-bean);
+  --testo-secondario: #62575A;
+  --bordo: #E4DADC;
 
-  --sfondo: #f2f5fb;
-  --bordo: #d9e0ee;
-  --testo: #14181f;
-  --grigio: #5b6573;
+  --primario: var(--bright-marine);
+  --primario-hover: #205A94;
 
-  --verde: #2b8a4b;
-  --giallo: #f2b705;
-  --pieno: #8d95a3;
+  --accento: var(--burnt-rose);
+  --accento-hover: #72242D;
+
+  --errore: var(--red);
+
+  --raggio: 14px;
+  --raggio-piccolo: 9px;
+
+  --ombra:
+    0 5px 20px rgba(14, 0, 4, 0.07);
+
+  --ombra-focus:
+    0 0 0 4px rgba(41, 110, 180, 0.16);
 }
+
+
+/* ==================================================
+   RESET E IMPOSTAZIONI GENERALI
+   ================================================== */
 
 * {
   box-sizing: border-box;
@@ -25,261 +47,450 @@
   display: none !important;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   color: var(--testo);
   background: var(--sfondo);
-  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  color: var(--porcelain);
+  background: var(--burnt-rose);
 }
 
 
-/* INTESTAZIONE */
+/* ==================================================
+   INTESTAZIONE
+   ================================================== */
 
 header {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 12px 20px;
-  background: var(--nero);
-  border-bottom: 4px solid var(--rosso);
+
+  min-height: 78px;
+  padding: 14px 24px;
+
+  color: var(--porcelain);
+  background: var(--coffee-bean);
+
+  border-bottom: 4px solid var(--burnt-rose);
 }
 
 header img {
+  display: block;
+
   width: 48px;
   height: 48px;
+
   object-fit: contain;
 }
 
-h1 {
+header h1 {
   margin: 0;
-  color: var(--rosso);
-  font-size: 2rem;
+
+  color: var(--porcelain);
+
+  font-size: 1.8rem;
   font-weight: 800;
-  letter-spacing: -.02em;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
 }
 
 
-/* CONTENUTO PRINCIPALE */
+/* ==================================================
+   CONTENITORE PRINCIPALE
+   ================================================== */
 
 main {
-  width: min(100% - 28px, 600px);
+  width: min(100% - 32px, 620px);
+
   margin: 0 auto;
-  padding: 28px 0 48px;
+  padding: 30px 0 48px;
 }
+
+
+/* ==================================================
+   TESTO INTRODUTTIVO
+   ================================================== */
 
 #intro {
-  margin: 0 0 22px;
-  color: var(--grigio);
+  margin: 0 0 24px;
+
+  color: var(--testo-secondario);
+
+  font-size: 1rem;
+  line-height: 1.65;
 }
 
-.testo-supporto {
-  margin: 8px 0 18px;
-  color: var(--grigio);
-}
 
-
-/* PAGINE */
+/* ==================================================
+   PAGINE DEL MODULO E SCHEDE
+   ================================================== */
 
 .passo,
 .scheda {
   margin: 0 0 20px;
-  padding: 26px 22px;
-  background: #fff;
+  padding: 28px 24px;
+
+  background: var(--superficie);
+
   border: 1px solid var(--bordo);
-  border-top: 4px solid var(--blu);
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(11, 42, 91, .08);
-  animation: appare .3s ease;
+  border-top: 5px solid var(--burnt-rose);
+
+  border-radius: var(--raggio);
+
+  box-shadow: var(--ombra);
+
+  animation: apparizione 0.25s ease-out;
 }
 
-@keyframes appare {
+.passo {
+  min-width: 0;
+}
+
+@keyframes apparizione {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(7px);
   }
 
   to {
     opacity: 1;
-    transform: none;
+    transform: translateY(0);
   }
 }
 
+
+/* ==================================================
+   TITOLI E LEGGENDE DEI FORM FIELD
+   ================================================== */
+
+legend,
 h2 {
-  margin: 0 0 18px;
+  margin: 0 0 8px;
   padding: 0;
-  color: var(--blu-scuro);
-  font-size: 1.2rem;
+
+  color: var(--burnt-rose);
+
+  font-size: 1.3rem;
   font-weight: 800;
+  line-height: 1.35;
 }
 
-h3 {
-  color: var(--blu-scuro);
+legend {
+  width: 100%;
 }
 
-
-/* TITOLI DEI GRUPPI DI CAMPI */
-
-.titolo-sezione {
-  margin: 8px 0 10px;
-  font-size: 1.1rem;
+h2:not(:first-child) {
+  margin-top: 30px;
 }
 
-.titolo-secondario {
-  margin-top: 28px;
-}
+/*
+ * I contenitori dedicati ai dati del genitore
+ * e del bambino possono avere il proprio fieldset.
+ */
 
-
-/* RIQUADRI DATI GENITORE, BAMBINO E ADULTO */
-
-.gruppo-campi {
+fieldset {
   min-width: 0;
-  margin: 0;
-  padding: 18px;
-  border: 1px solid var(--bordo);
-  border-radius: 10px;
-  background: #fff;
 }
 
-.gruppo-campi + .titolo-sezione {
-  margin-top: 28px;
+fieldset.passo {
+  border-left: 1px solid var(--bordo);
+  border-right: 1px solid var(--bordo);
+  border-bottom: 1px solid var(--bordo);
 }
 
 
-/* GRIGLIA DEI CAMPI */
+/* ==================================================
+   GRIGLIA DEI CAMPI
+   ================================================== */
 
 .campi {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px 16px;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 20px 16px;
+
+  margin-top: 20px;
 }
 
 .intero {
   grid-column: 1 / -1;
 }
 
+
+/* ==================================================
+   ETICHETTE DEI CAMPI
+   ================================================== */
+
 label {
   display: flex;
   flex-direction: column;
   gap: 7px;
+
   min-width: 0;
-  color: var(--blu-scuro);
-  font-size: .9rem;
-  font-weight: 600;
+
+  color: var(--coffee-bean);
+
+  font-size: 0.93rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+label small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--testo-secondario);
+
+  font-size: 0.84rem;
+  font-weight: 400;
+  line-height: 1.45;
 }
 
 
-/* INPUT, SELECT E TEXTAREA */
+/* ==================================================
+   INPUT, SELECT E TEXTAREA
+   ================================================== */
 
-input:not([type="radio"]):not([type="hidden"]),
+input:not([type="radio"]):not([type="checkbox"]):not([type="hidden"]),
 select,
 textarea {
+  display: block;
+
   width: 100%;
+  min-width: 0;
   min-height: 50px;
+
   padding: 12px 14px;
-  color: var(--testo);
-  background: #fff;
-  border: 2px solid var(--bordo);
-  border-radius: 8px;
-  font: inherit;
+
+  color: var(--coffee-bean);
+  background: var(--porcelain);
+
+  border: 1.5px solid #D8CDD0;
+  border-radius: var(--raggio-piccolo);
+
+  outline: none;
+
+  font-size: 1rem;
   font-weight: 400;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
 }
 
 textarea {
   min-height: 110px;
+
   resize: vertical;
+  line-height: 1.55;
 }
 
-::placeholder {
-  color: #a2abb8;
+select {
+  cursor: pointer;
 }
 
-input:focus,
+input::placeholder,
+textarea::placeholder {
+  color: #8B8184;
+  opacity: 1;
+}
+
+/* Stato attivo */
+
+input:not([type="radio"]):not([type="checkbox"]):focus,
 select:focus,
 textarea:focus {
-  outline: none;
-  border-color: var(--blu);
-  box-shadow: 0 0 0 3px rgba(29, 78, 216, .15);
+  background: #FFFFFF;
+
+  border-color: var(--bright-marine);
+
+  box-shadow: var(--ombra-focus);
 }
+
+/* Campi disabilitati */
 
 input:disabled,
 select:disabled,
 textarea:disabled {
+  color: #82777A;
+  background: #F1EDEF;
+
   cursor: not-allowed;
-  background: #f1f3f7;
 }
 
+/* Data di nascita */
 
-/* SCELTA INIZIALE */
-
-.scelta {
-  flex-direction: row;
-  align-items: center;
-  gap: 12px;
-  margin-top: 14px;
-  padding: 16px;
-  font-size: 1rem;
-  background: #fff;
-  border: 2px solid var(--bordo);
-  border-radius: 10px;
+input[type="date"] {
+  min-height: 50px;
   cursor: pointer;
 }
 
-.scelta:has(input:checked) {
-  border-color: var(--blu);
-  background: var(--blu-chiaro);
+
+/* ==================================================
+   CAMPI CONDIZIONALI
+   ================================================== */
+
+/*
+ * Il JavaScript controlla la proprietà hidden.
+ * Qui rendiamo più fluida la presentazione dei campi
+ * che appaiono quando si seleziona "Sì".
+ */
+
+[id^="campoGrado"] {
+  margin-top: 2px;
 }
 
-.scelta input {
+[id^="campoGrado"] input {
+  border-color: var(--bright-marine);
+  background: #F5F9FE;
+}
+
+
+/* ==================================================
+   SCELTA GENITORE / ADULTO
+   ================================================== */
+
+.scelta {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  gap: 13px;
+
+  margin-top: 14px;
+  padding: 17px;
+
+  color: var(--coffee-bean);
+  background: var(--porcelain);
+
+  border: 1.5px solid var(--bordo);
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.scelta:hover {
+  border-color: var(--bright-marine);
+  background: #F5F9FE;
+}
+
+.scelta:has(input:checked) {
+  border-color: var(--bright-marine);
+  background: #EDF5FD;
+
+  box-shadow:
+    0 0 0 1px var(--bright-marine);
+}
+
+.scelta input[type="radio"] {
   flex: 0 0 auto;
-  width: 20px;
-  height: 20px;
+
+  width: 21px;
+  height: 21px;
+
   margin: 0;
-  accent-color: var(--blu);
+
+  accent-color: var(--bright-marine);
+
+  cursor: pointer;
 }
 
 .scelta span {
   display: block;
+  min-width: 0;
 }
 
-.scelta small {
+.scelta span small {
   display: block;
-  color: var(--grigio);
-  font-weight: 400;
 }
 
 
-/* LEGENDA DISPONIBILITÀ */
+/* ==================================================
+   LEGENDA DISPONIBILITÀ
+   ================================================== */
 
 #legenda {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 18px;
-  margin: 16px 0 18px;
+
+  gap: 10px 16px;
+
+  margin: 18px 0 20px;
   padding: 0;
+
   list-style: none;
-  color: var(--grigio);
-  font-size: .85rem;
+
+  color: var(--testo-secondario);
+  font-size: 0.84rem;
 }
 
 #legenda li {
   display: flex;
   align-items: center;
-  gap: 6px;
+
+  gap: 7px;
 }
 
 #legenda i {
-  width: 12px;
-  height: 12px;
+  display: inline-block;
+
+  flex: 0 0 auto;
+
+  width: 11px;
+  height: 11px;
+
   border-radius: 50%;
 }
 
 
-/* GIORNI DISPONIBILI */
+/* ==================================================
+   CALENDARIO
+   ================================================== */
 
 #giorni {
   display: grid;
+
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+
+  gap: 11px;
 }
 
 .giorno {
@@ -287,121 +498,137 @@ textarea:disabled {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   min-width: 0;
-  min-height: 84px;
-  padding: 10px 6px;
-  color: #fff;
-  border: 3px solid transparent;
-  border-radius: 10px;
+  min-height: 88px;
+
+  padding: 12px 6px;
+
+  color: var(--porcelain);
+
+  border: 2px solid transparent;
+  border-radius: 11px;
+
   font: inherit;
+
   cursor: pointer;
+
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    border-color 0.16s ease,
+    opacity 0.16s ease;
+}
+
+.giorno:hover:not(.pieno) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 5px 12px rgba(14, 0, 4, 0.13);
 }
 
 .giorno span {
-  font-size: .72rem;
-  letter-spacing: .1em;
+  font-size: 0.72rem;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .giorno strong {
-  font-size: 1.5rem;
+  margin-top: 4px;
+
+  font-size: 1.45rem;
+  font-weight: 800;
   line-height: 1.2;
 }
 
+
+/*
+ * Colori dei turni:
+ *
+ * Verde:       Bright Marine
+ * Giallo:      Burnt Rose
+ * Rosso:       Red
+ * Pieno:       Coffee Bean
+ *
+ * La legenda e il testo continuano a indicare
+ * chiaramente il numero di posti disponibili.
+ */
+
 .verde {
-  background: var(--verde);
+  color: #FFFFFF;
+  background: var(--bright-marine);
 }
 
 .giallo {
-  background: var(--giallo);
+  color: #FFFFFF;
+  background: var(--burnt-rose);
 }
 
 .rosso {
-  background: var(--rosso);
+  color: #FFFFFF;
+  background: var(--red);
 }
 
 .pieno {
-  background: var(--pieno);
+  color: var(--porcelain);
+  background: var(--coffee-bean);
 }
 
-.giorno.giallo {
-  color: #2b2100;
-}
+
+/* Stato del turno pieno */
 
 .giorno.pieno {
-  opacity: .45;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
+
+/* Giorno selezionato */
+
 .giorno.scelto {
-  border-color: var(--nero);
-  box-shadow: 0 0 0 2px #fff inset;
+  border-color: var(--coffee-bean);
+
+  box-shadow:
+    0 0 0 2px var(--porcelain) inset,
+    0 0 0 3px var(--coffee-bean);
 }
 
 .giorno.scelto strong::after {
   content: " ✓";
-  font-size: 1rem;
+
+  font-size: 0.9rem;
+  font-weight: 800;
 }
 
 
-/* MESSAGGI DISPONIBILITÀ */
+/* ==================================================
+   MESSAGGI E NOTE
+   ================================================== */
 
 .nota {
   grid-column: 1 / -1;
+
   margin: 0;
-  color: var(--grigio);
+
+  color: var(--testo-secondario);
+
+  font-size: 0.93rem;
+  line-height: 1.6;
 }
 
 .nota.errore {
-  color: var(--rosso-scuro);
-  font-weight: 600;
+  color: var(--burnt-rose);
+  font-weight: 700;
 }
-
-
-/* RIEPILOGO */
-
-#riepilogo {
-  margin-top: 18px;
-  border: 1px solid var(--bordo);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-#riepilogo h3 {
-  margin: 0;
-  padding: 11px 14px;
-  color: #fff;
-  background: var(--blu-scuro);
-  font-size: .85rem;
-  letter-spacing: .04em;
-}
-
-#riepilogo dl {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
-  gap: 12px;
-  margin: 0;
-  padding: 11px 14px;
-  border-top: 1px solid #edf0f6;
-}
-
-#riepilogo dt {
-  color: var(--grigio);
-  font-size: .9rem;
-}
-
-#riepilogo dd {
-  margin: 0;
-  min-width: 0;
-  font-weight: 600;
-  overflow-wrap: anywhere;
-}
-
-
-/* MESSAGGI E VALIDAZIONE */
 
 #messaggio {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
+
+  color: var(--testo-secondario);
+
+  font-size: 0.94rem;
   font-weight: 600;
 }
 
@@ -410,180 +637,566 @@ textarea:disabled {
 }
 
 #messaggio.errore {
-  color: var(--rosso-scuro);
+  padding: 12px 14px;
+
+  color: var(--burnt-rose);
+  background: #F8ECEE;
+
+  border-left: 4px solid var(--red);
+  border-radius: 5px;
 }
 
 
-/* NAVIGAZIONE */
+/* ==================================================
+   RIEPILOGO DELLA PRENOTAZIONE
+   ================================================== */
+
+#riepilogo {
+  margin-top: 20px;
+
+  overflow: hidden;
+
+  background: var(--superficie);
+
+  border: 1px solid var(--bordo);
+  border-radius: 11px;
+}
+
+
+/* Titoli delle sezioni */
+
+#riepilogo h3 {
+  margin: 0;
+  padding: 12px 15px;
+
+  color: var(--porcelain);
+  background: var(--burnt-rose);
+
+  font-size: 0.88rem;
+  font-weight: 800;
+
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+
+/* Righe del riepilogo */
+
+#riepilogo dl {
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+
+  gap: 12px;
+
+  margin: 0;
+  padding: 12px 15px;
+
+  border-top: 1px solid #EEE6E8;
+}
+
+#riepilogo dt {
+  color: var(--testo-secondario);
+
+  font-size: 0.9rem;
+}
+
+#riepilogo dd {
+  min-width: 0;
+
+  margin: 0;
+
+  color: var(--coffee-bean);
+
+  font-size: 0.93rem;
+  font-weight: 650;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ==================================================
+   NAVIGAZIONE TRA LE PAGINE
+   ================================================== */
 
 nav {
   display: flex;
+  align-items: stretch;
+
   gap: 12px;
+
+  margin-top: 20px;
 }
 
 nav button {
-  min-height: 52px;
-  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 54px;
+
+  padding: 12px 18px;
+
+  color: #FFFFFF;
+
   border: 0;
   border-radius: 10px;
-  font: inherit;
-  font-weight: 700;
+
+  font-size: 1rem;
+  font-weight: 750;
+
   cursor: pointer;
+
+  transition:
+    background-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    opacity 0.18s ease;
 }
 
-#avanti,
-#indietro {
-  width: 56px;
-  background: var(--blu);
-  font-size: 1.5rem;
-}
 
-#avanti:hover,
-#indietro:hover {
-  background: var(--blu-scuro);
-}
-
-#indietro {
-  background: var(--nero);
-}
+/* Pulsante Avanti */
 
 #avanti {
+  width: 62px;
+  min-width: 62px;
+
   margin-left: auto;
+
+  background: var(--bright-marine);
+
+  font-size: 1.6rem;
 }
+
+#avanti:hover {
+  background: var(--primario-hover);
+}
+
+
+/* Pulsante Indietro */
+
+#indietro {
+  width: 62px;
+  min-width: 62px;
+
+  background: var(--coffee-bean);
+
+  font-size: 1.6rem;
+}
+
+#indietro:hover {
+  background: var(--burnt-rose);
+}
+
+
+/* Pulsante Conferma */
 
 #invia {
   flex: 1;
-  background: var(--rosso);
+
+  min-height: 54px;
+
+  color: #FFFFFF;
+  background: var(--red);
+
+  font-size: 1rem;
 }
 
 #invia:hover {
-  background: var(--rosso-scuro);
+  background: #DF1118;
 }
 
+
+/* ==================================================
+   PULSANTI GENERICI
+   ================================================== */
+
 button:focus-visible {
-  outline: 3px solid var(--blu);
-  outline-offset: 2px;
+  outline: 3px solid var(--bright-marine);
+  outline-offset: 3px;
 }
 
 button:disabled {
-  opacity: .6;
+  opacity: 0.55;
   cursor: wait;
 }
 
-
-/* CONFERMA FINALE */
-
 .primario {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
-  min-height: 50px;
-  padding: 12px 16px;
-  color: #fff;
-  background: var(--rosso);
+  min-height: 52px;
+
+  padding: 13px 18px;
+
+  color: #FFFFFF;
+  background: var(--red);
+
   border: 0;
   border-radius: 10px;
-  font: inherit;
-  font-weight: 700;
+
+  font-size: 1rem;
+  font-weight: 750;
+
   cursor: pointer;
+
+  transition:
+    background-color 0.18s ease,
+    transform 0.18s ease;
 }
 
 .primario:hover {
-  background: var(--rosso-scuro);
+  background: #DF1118;
 }
 
+.primario:active,
+nav button:active {
+  transform: scale(0.98);
+}
+
+
+/* ==================================================
+   SCHERMATA DI CONFERMA
+   ================================================== */
+
 #successo {
+  padding: 34px 26px;
+
   text-align: center;
-  border-top-color: var(--rosso);
+
+  border-top-color: var(--bright-marine);
 }
 
 #successo img {
   display: block;
-  width: 110px;
-  height: 110px;
-  margin: 0 auto 14px;
+
+  width: 100px;
+  height: 100px;
+
+  margin: 0 auto 20px;
+
   object-fit: contain;
 }
 
-#successo p,
-dialog p {
-  margin: 12px 0 22px;
-  color: var(--grigio);
+#successo h2 {
+  margin: 0 0 12px;
+
+  color: var(--burnt-rose);
+
+  font-size: 1.55rem;
+  line-height: 1.3;
+}
+
+#successo p {
+  margin: 12px 0 26px;
+
+  color: var(--testo-secondario);
+
+  line-height: 1.7;
+}
+
+#successo .primario {
+  margin-top: 6px;
 }
 
 
-/* FINESTRA TURNO PIENO */
+/* ==================================================
+   FINESTRA DI AVVISO
+   ================================================== */
 
 dialog {
-  width: min(100% - 32px, 360px);
-  padding: 26px 22px;
+  width: min(100% - 32px, 390px);
+
+  padding: 28px 24px;
+
+  color: var(--coffee-bean);
+  background: var(--porcelain);
+
+  border: 1px solid var(--bordo);
+  border-top: 5px solid var(--red);
+
+  border-radius: var(--raggio);
+
+  box-shadow:
+    0 18px 60px rgba(14, 0, 4, 0.22);
+
   text-align: center;
-  border: 0;
-  border-top: 4px solid var(--rosso);
-  border-radius: 12px;
 }
 
 dialog::backdrop {
-  background: rgba(10, 10, 10, .7);
+  background: rgba(14, 0, 4, 0.68);
+
+  backdrop-filter: blur(3px);
+}
+
+dialog h2 {
+  margin: 0 0 12px;
+
+  color: var(--burnt-rose);
+}
+
+dialog p {
+  margin: 12px 0 24px;
+
+  color: var(--testo-secondario);
+
+  line-height: 1.65;
 }
 
 
-/* CAMPO ANTISPAM NASCOSTO */
+/* ==================================================
+   CAMPO ANTISPAM INVISIBILE
+   ================================================== */
 
 .trappola {
-  position: absolute;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
+  position: absolute !important;
+
+  left: -9999px !important;
+
+  width: 1px !important;
+  height: 1px !important;
+
+  padding: 0 !important;
+
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 
-/* SCHERMI PICCOLI */
+/* ==================================================
+   RESPONSIVE — TABLET
+   ================================================== */
 
-@media (max-width: 560px) {
-  .passo,
-  .scheda {
-    padding: 22px 16px;
+@media (max-width: 700px) {
+  main {
+    width: min(100% - 28px, 620px);
+
+    padding-top: 24px;
   }
 
-  .gruppo-campi {
-    padding: 14px;
+  .passo,
+  .scheda {
+    padding: 24px 20px;
   }
 
   .campi {
-    grid-template-columns: 1fr;
+    gap: 18px 12px;
+  }
+}
+
+
+/* ==================================================
+   RESPONSIVE — SMARTPHONE
+   ================================================== */
+
+@media (max-width: 560px) {
+  header {
+    min-height: 68px;
+
+    gap: 11px;
+    padding: 11px 16px;
+  }
+
+  header img {
+    width: 42px;
+    height: 42px;
+  }
+
+  header h1 {
+    font-size: 1.55rem;
+  }
+
+  main {
+    width: calc(100% - 24px);
+
+    padding-top: 20px;
+    padding-bottom: 34px;
+  }
+
+  #intro {
+    margin-bottom: 19px;
+
+    font-size: 0.95rem;
+  }
+
+  .passo,
+  .scheda {
+    margin-bottom: 16px;
+    padding: 22px 16px;
+
+    border-radius: 12px;
+  }
+
+  legend,
+  h2 {
+    font-size: 1.18rem;
+  }
+
+  .campi {
+    grid-template-columns: minmax(0, 1fr);
+
+    gap: 18px;
+
+    margin-top: 17px;
   }
 
   .intero {
     grid-column: auto;
   }
 
+  label {
+    font-size: 0.92rem;
+  }
+
+  input:not([type="radio"]):not([type="checkbox"]):not([type="hidden"]),
+  select,
+  textarea {
+    min-height: 49px;
+
+    padding: 12px;
+  }
+
+  .scelta {
+    gap: 12px;
+
+    padding: 15px 13px;
+  }
+
+  #legenda {
+    gap: 10px 13px;
+
+    font-size: 0.8rem;
+  }
+
   #giorni {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 7px;
+
+    gap: 8px;
   }
 
   .giorno {
-    min-height: 76px;
-    padding: 8px 4px;
+    min-height: 78px;
+
+    padding: 9px 3px;
+
+    border-radius: 9px;
+  }
+
+  .giorno span {
+    font-size: 0.65rem;
   }
 
   .giorno strong {
-    font-size: 1.3rem;
+    font-size: 1.22rem;
+  }
+
+  #riepilogo h3 {
+    padding: 11px 12px;
+
+    font-size: 0.82rem;
   }
 
   #riepilogo dl {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-    gap: 8px;
-    padding: 10px;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+
+    gap: 10px;
+
+    padding: 11px 12px;
+  }
+
+  #riepilogo dt,
+  #riepilogo dd {
+    font-size: 0.86rem;
+  }
+
+  nav {
+    gap: 10px;
+
+    margin-top: 16px;
+  }
+
+  nav button {
+    min-height: 52px;
+  }
+
+  #avanti,
+  #indietro {
+    width: 56px;
+    min-width: 56px;
+  }
+
+  #invia {
+    padding: 12px;
+
+    font-size: 0.94rem;
+  }
+
+  #successo {
+    padding: 28px 18px;
+  }
+
+  #successo h2 {
+    font-size: 1.35rem;
+  }
+
+  #successo img {
+    width: 86px;
+    height: 86px;
+  }
+
+  dialog {
+    padding: 24px 18px;
   }
 }
 
 
-/* ACCESSIBILITÀ: RIDUZIONE DELLE ANIMAZIONI */
+/* ==================================================
+   SCHERMI MOLTO PICCOLI
+   ================================================== */
+
+@media (max-width: 360px) {
+  header h1 {
+    font-size: 1.35rem;
+  }
+
+  #giorni {
+    gap: 6px;
+  }
+
+  .giorno {
+    min-height: 72px;
+  }
+
+  .giorno strong {
+    font-size: 1.1rem;
+  }
+
+  #riepilogo dl {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  #riepilogo dd {
+    font-weight: 700;
+  }
+}
+
+
+/* ==================================================
+   ACCESSIBILITÀ — RIDUZIONE DELLE ANIMAZIONI
+   ================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  .passo,
-  .scheda {
-    animation: none;
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
   }
 }
