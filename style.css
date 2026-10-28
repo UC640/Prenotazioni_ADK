@@ -1,29 +1,29 @@
-/* VARIANTE 4 — NERO E ROSSO SPORTIVO */
+/* VARIANTE 3 — BORDEAUX E AVORIO */
 :root {
   --porcelain: #FFFFFA;
   --rose: #8C2F39;
   --marine: #296EB4;
   --coffee: #0E0004;
   --red: #FF1B1C;
-  --bg: #F4F2F1;
-  --card: #FFFFFA;
+  --bg: #FFFFFA;
+  --card: #FFFFFF;
   --text: #0E0004;
-  --border: #D9D3D4;
+  --border: #E4D4D6;
 }
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body { margin: 0; color: var(--text); background: var(--bg); font: 16px/1.55 system-ui, sans-serif; }
 
-header { display: flex; align-items: center; gap: 14px; padding: 14px 22px; background: var(--coffee); border-bottom: 5px solid var(--red); }
+header { display: flex; align-items: center; gap: 14px; padding: 14px 22px; background: var(--coffee); border-bottom: 5px solid var(--rose); }
 header img { width: 48px; height: 48px; object-fit: contain; }
-header h1 { margin: 0; color: var(--red); font-size: 1.9rem; font-weight: 900; letter-spacing: -.035em; }
+header h1 { margin: 0; color: var(--red); font-size: 1.9rem; font-weight: 850; }
 
 main { width: min(100% - 28px, 620px); margin: auto; padding: 28px 0 45px; }
 #intro { color: #62575A; margin: 0 0 24px; }
 
-.passo, .scheda { margin-bottom: 20px; padding: 26px 22px; background: var(--card); border: 1px solid var(--border); border-top: 5px solid var(--red); border-radius: 12px; box-shadow: 0 5px 18px #0E000412; }
-legend, h2 { color: var(--coffee); font-size: 1.25rem; font-weight: 850; }
+.passo, .scheda { margin-bottom: 20px; padding: 26px 22px; background: var(--card); border: 1px solid var(--border); border-top: 5px solid var(--rose); border-radius: 14px; box-shadow: 0 5px 18px #0E000408; }
+legend, h2 { color: var(--rose); font-size: 1.25rem; font-weight: 800; }
 h2:not(:first-child) { margin-top: 28px; }
 
 .campi { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 14px; margin-top: 18px; }
@@ -32,22 +32,22 @@ label { display: flex; flex-direction: column; gap: 7px; font-size: .93rem; font
 
 input:not([type="radio"]):not([type="hidden"]), select, textarea {
   width: 100%; min-height: 49px; padding: 12px;
-  color: var(--coffee); background: #FFFFFF;
-  border: 1.5px solid #D9D3D4; border-radius: 7px; font: inherit;
+  color: var(--coffee); background: #FFFFFA;
+  border: 1.5px solid #DCCBCD; border-radius: 8px; font: inherit;
 }
 textarea { resize: vertical; }
 input:focus, select:focus, textarea:focus { outline: 3px solid #296EB425; border-color: var(--marine); }
 
-.scelta { display: flex; flex-direction: row; align-items: center; gap: 12px; margin-top: 13px; padding: 16px; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; background: #FFFFFF; }
-.scelta:has(input:checked) { border-color: var(--red); background: #FFF0F0; box-shadow: 0 0 0 1px var(--red); }
-.scelta input { accent-color: var(--red); }
+.scelta { display: flex; flex-direction: row; align-items: center; gap: 12px; margin-top: 13px; padding: 16px; border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; background: #FFFFFA; }
+.scelta:has(input:checked) { border-color: var(--rose); background: #F7ECEE; }
+.scelta input { accent-color: var(--rose); }
 
 #legenda { display: flex; flex-wrap: wrap; gap: 10px 16px; padding: 0; list-style: none; font-size: .84rem; }
 #legenda li { display: flex; align-items: center; gap: 6px; }
 #legenda i { width: 11px; height: 11px; border-radius: 50%; }
 
 #giorni { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.giorno { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 82px; color: white; border: 3px solid transparent; border-radius: 8px; cursor: pointer; }
+.giorno { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 82px; color: white; border: 3px solid transparent; border-radius: 10px; cursor: pointer; }
 .giorno span { font-size: .72rem; text-transform: uppercase; }
 .giorno strong { font-size: 1.4rem; }
 .verde { background: var(--marine); }
@@ -57,28 +57,27 @@ input:focus, select:focus, textarea:focus { outline: 3px solid #296EB425; border
 .giorno.pieno { opacity: .4; cursor: not-allowed; }
 .giorno.scelto { border-color: var(--coffee); box-shadow: 0 0 0 2px white inset; }
 
-#riepilogo { margin-top: 18px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-#riepilogo h3 { margin: 0; padding: 11px 14px; color: white; background: var(--coffee); border-left: 4px solid var(--red); font-size: .88rem; }
-#riepilogo dl { display: grid; grid-template-columns: 1fr 1.2fr; gap: 10px; margin: 0; padding: 11px 14px; border-top: 1px solid #E9E4E4; }
+#riepilogo { margin-top: 18px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+#riepilogo h3 { margin: 0; padding: 11px 14px; color: white; background: var(--rose); font-size: .88rem; }
+#riepilogo dl { display: grid; grid-template-columns: 1fr 1.2fr; gap: 10px; margin: 0; padding: 11px 14px; border-top: 1px solid #EEE6E8; }
 #riepilogo dt { color: #62575A; }
-#riepilogo dd { margin: 0; font-weight: 700; overflow-wrap: anywhere; }
+#riepilogo dd { margin: 0; font-weight: 650; overflow-wrap: anywhere; }
 
-#messaggio { font-weight: 650; }
+#messaggio { font-weight: 600; }
 #messaggio:empty { display: none; }
 #messaggio.errore, .nota.errore { color: var(--rose); }
 
 nav { display: flex; gap: 10px; }
-nav button, .primario { min-height: 52px; padding: 12px 18px; color: white; border: 0; border-radius: 8px; font: inherit; font-weight: 800; cursor: pointer; }
+nav button, .primario { min-height: 52px; padding: 12px 18px; color: white; border: 0; border-radius: 9px; font: inherit; font-weight: 750; cursor: pointer; }
 #indietro { background: var(--coffee); }
-#avanti { width: 60px; margin-left: auto; background: var(--marine); font-size: 1.5rem; }
+#avanti { width: 60px; margin-left: auto; background: var(--rose); font-size: 1.5rem; }
 #invia, .primario { background: var(--red); }
 #invia { flex: 1; }
-#successo { text-align: center; border-top-color: var(--red); }
-#successo h2 { color: var(--red); }
+#successo { text-align: center; border-top-color: var(--rose); }
 #successo img { width: 100px; height: 100px; object-fit: contain; }
 #successo p, dialog p { color: #62575A; }
-dialog { width: min(100% - 32px, 380px); padding: 25px; border: 0; border-top: 5px solid var(--red); border-radius: 12px; text-align: center; }
-dialog::backdrop { background: #0E0004CC; }
+dialog { width: min(100% - 32px, 380px); padding: 25px; border: 0; border-top: 5px solid var(--rose); border-radius: 14px; text-align: center; }
+dialog::backdrop { background: #0E0004B3; }
 .trappola { position: absolute; left: -9999px; }
 
 @media (max-width: 560px) {
