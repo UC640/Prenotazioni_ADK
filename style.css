@@ -1,785 +1,95 @@
-```css
-/* =========================================================
-   ADKARATE — PROFESSIONAL SPORT
-   Palette: rosso morbido, nero antracite, bianco caldo
-   Disponibilità: verde, giallo, rosso, grigio
-   ========================================================= */
-
+/* VARIANTE 4 — NERO E ROSSO SPORTIVO */
 :root {
-  /* Palette principale */
-  --rosso: #c83d43;
-  --rosso-scuro: #a92f36;
-  --rosso-chiaro: #f9e9e9;
-
-  --nero: #252326;
-  --nero-soft: #383538;
-
-  --bianco: #fffdfa;
-  --sfondo: #f5f3f1;
-  --sfondo-card: #ffffff;
-
-  --testo: #302d2e;
-  --grigio-testo: #777174;
-  --bordo: #e5dfe0;
-
-  /* Disponibilità dei giorni */
-  --verde: #43835b;
-  --verde-chiaro: #e6f1e9;
-
-  --giallo: #e8bc4d;
-  --giallo-testo: #49370b;
-  --giallo-chiaro: #fff5d9;
-
-  --rosso-posti: #c83d43;
-  --rosso-posti-chiaro: #f9e9e9;
-
-  --grigio-pieno: #969196;
-
-  /* Forma e ombre */
-  --raggio: 14px;
-  --raggio-piccolo: 9px;
-  --ombra: 0 5px 18px rgba(37, 35, 38, 0.07);
-  --ombra-hover: 0 8px 24px rgba(37, 35, 38, 0.12);
-}
-
-/* =========================
-   REGOLE GENERALI
-   ========================= */
-
-* {
-  box-sizing: border-box;
-}
-
-[hidden] {
-  display: none !important;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  color: var(--testo);
-  background: var(--sfondo);
-  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-}
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-button {
-  -webkit-tap-highlight-color: transparent;
-}
-
-::selection {
-  color: var(--bianco);
-  background: var(--rosso);
-}
-
-/* =========================
-   TESTATA E LOGO
-   ========================= */
-
-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 22px;
-  background: var(--nero);
-  border-bottom: 4px solid var(--rosso);
-  box-shadow: 0 3px 12px rgba(37, 35, 38, 0.12);
-}
-
-header img {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-}
-
-/* Il titolo ADKarate è sempre rosso */
-
-h1 {
-  margin: 0;
-  color: var(--rosso) !important;
-  font-size: clamp(1.65rem, 4vw, 2rem);
-  font-weight: 850;
-  letter-spacing: -0.04em;
-  line-height: 1.2;
-}
-
-/* =========================
-   CONTENITORE PRINCIPALE
-   ========================= */
-
-main {
-  width: min(100% - 32px, 650px);
-  margin: 0 auto;
-  padding: 30px 0 48px;
-}
-
-#intro {
-  margin: 0 0 24px;
-  padding: 16px 18px;
-  color: var(--grigio-testo);
-  background: var(--bianco);
-  border-left: 4px solid var(--rosso);
-  border-radius: 0 var(--raggio-piccolo) var(--raggio-piccolo) 0;
-  box-shadow: var(--ombra);
-}
-
-/* =========================
-   PAGINE DEL MODULO
-   ========================= */
-
-.passo,
-.scheda {
-  margin: 0 0 22px;
-  padding: 28px 24px;
-  background: var(--sfondo-card);
-  border: 1px solid var(--bordo);
-  border-top: 4px solid var(--rosso);
-  border-radius: var(--raggio);
-  box-shadow: var(--ombra);
-  animation: appare 0.28s ease-out;
-}
-
-@keyframes appare {
-  from {
-    opacity: 0;
-    transform: translateY(7px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Titoli delle sezioni */
-
-legend,
-h2 {
-  margin: 0 0 8px;
-  padding: 0;
-  color: var(--nero);
-  font-size: 1.25rem;
-  font-weight: 800;
-  line-height: 1.3;
-}
-
-legend {
-  padding-right: 10px;
-}
-
-h2:not(:first-child) {
-  margin-top: 30px;
-}
-
-/* =========================
-   CAMPI DEL MODULO
-   ========================= */
-
-.campi {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px 16px;
-  margin-top: 20px;
-}
-
-.intero {
-  grid-column: 1 / -1;
-}
-
-label {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  min-width: 0;
-  color: var(--nero-soft);
-  font-size: 0.93rem;
-  font-weight: 650;
-}
-
-/* Input, menu a tendina e aree di testo */
-
-input:not([type="radio"]):not([type="checkbox"]):not([type="hidden"]),
-select,
-textarea {
-  width: 100%;
-  min-height: 50px;
-  padding: 12px 14px;
-  color: var(--testo);
-  background: var(--bianco);
-  border: 1.5px solid #d8d1d3;
-  border-radius: var(--raggio-piccolo);
-  outline: none;
-  transition:
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    background-color 0.18s ease;
-}
-
-textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: #a39ca0;
-  opacity: 1;
-}
-
-/* Evidenziazione del campo attivo */
-
-input:not([type="radio"]):not([type="checkbox"]):not([type="hidden"]):focus,
-select:focus,
-textarea:focus {
-  background: #ffffff;
-  border-color: var(--rosso);
-  box-shadow: 0 0 0 3px rgba(200, 61, 67, 0.12);
-}
-
-input:disabled,
-select:disabled,
-textarea:disabled {
-  background: #f0eeee;
-  color: #918a8e;
-  cursor: not-allowed;
-}
-
-/* =========================
-   SCELTE A RADIO
-   ========================= */
-
-.scelta {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 13px;
-  margin-top: 14px;
-  padding: 17px;
-  color: var(--testo);
-  background: var(--bianco);
-  border: 1.5px solid var(--bordo);
-  border-radius: 12px;
-  cursor: pointer;
-  transition:
-    border-color 0.18s ease,
-    background-color 0.18s ease,
-    transform 0.18s ease;
-}
-
-.scelta:hover {
-  border-color: #d4a0a2;
-  background: #fffafa;
-}
-
-.scelta:has(input:checked) {
-  border-color: var(--rosso);
-  background: var(--rosso-chiaro);
-}
-
-.scelta input[type="radio"] {
-  flex: 0 0 auto;
-  width: 20px;
-  height: 20px;
-  margin: 0;
-  accent-color: var(--rosso);
-  cursor: pointer;
-}
-
-.scelta span {
-  display: block;
-  min-width: 0;
-  font-weight: 750;
-}
-
-.scelta small {
-  display: block;
-  margin-top: 3px;
-  color: var(--grigio-testo);
-  font-size: 0.85rem;
-  font-weight: 400;
-}
-
-/* =========================
-   DISPONIBILITÀ DEI GIORNI
-   ========================= */
-
-#legenda {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 16px;
-  margin: 18px 0 22px;
-  padding: 0;
-  list-style: none;
-  color: var(--grigio-testo);
-  font-size: 0.85rem;
-}
-
-#legenda li {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-#legenda i {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
-/* Griglia dei giorni */
-
-#giorni {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-
-/* Pulsante del singolo giorno */
-
-.giorno {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  min-width: 0;
-  min-height: 88px;
-  padding: 12px 6px;
-  color: #ffffff;
-  border: 2px solid transparent;
-  border-radius: 12px;
-  font: inherit;
-  cursor: pointer;
-  transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    border-color 0.18s ease;
-}
-
-.giorno span {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.giorno strong {
-  font-size: 1.45rem;
-  font-weight: 850;
-  line-height: 1.2;
-}
-
-/* 3 posti disponibili */
-
-.verde {
-  background: var(--verde);
-}
-
-/* 2 posti disponibili */
-
-.giallo {
-  background: var(--giallo);
-}
-
-/* 1 posto disponibile */
-
-.rosso {
-  background: var(--rosso-posti);
-}
-
-/* Nessun posto disponibile */
-
-.pieno {
-  background: var(--grigio-pieno);
-}
-
-/* Contrasto del testo sul pulsante giallo */
-
-.giorno.giallo {
-  color: var(--giallo-testo);
-}
-
-/* Hover: solo sui giorni selezionabili */
-
-.giorno:not(.pieno):hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 12px rgba(37, 35, 38, 0.15);
-}
-
-/* Giorno selezionato */
-
-.giorno.scelto {
-  border-color: var(--nero);
-  box-shadow:
-    0 0 0 2px #ffffff inset,
-    0 0 0 4px var(--nero);
-  transform: translateY(-1px);
-}
-
-.giorno.scelto strong::after {
-  content: " ✓";
-  font-size: 0.9rem;
-}
-
-/* Turno pieno: visivamente disabilitato */
-
-.giorno.pieno {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-.giorno.pieno:hover {
-  transform: none;
-  box-shadow: none;
-}
-
-/* Messaggi relativi alla disponibilità */
-
-.nota {
-  grid-column: 1 / -1;
-  margin: 0;
-  color: var(--grigio-testo);
-}
-
-.nota.errore {
-  color: var(--rosso-scuro);
-  font-weight: 700;
-}
-
-/* =========================
-   RIEPILOGO PRENOTAZIONE
-   ========================= */
-
-#riepilogo {
-  margin-top: 20px;
-  overflow: hidden;
-  background: #ffffff;
-  border: 1px solid var(--bordo);
-  border-radius: 12px;
-}
-
-/* Intestazione di ogni gruppo */
-
-#riepilogo h3 {
-  margin: 0;
-  padding: 12px 15px;
-  color: #ffffff;
-  background: var(--nero);
-  border-left: 4px solid var(--rosso);
-  font-size: 0.86rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-/* Riga del riepilogo */
-
-#riepilogo dl {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-  gap: 12px;
-  margin: 0;
-  padding: 12px 15px;
-  border-top: 1px solid #f0ebec;
-}
-
-#riepilogo dt {
-  color: var(--grigio-testo);
-  font-size: 0.9rem;
-}
-
-#riepilogo dd {
-  margin: 0;
-  min-width: 0;
-  color: var(--nero);
-  font-weight: 650;
-  overflow-wrap: anywhere;
-}
-
-/* =========================
-   MESSAGGI DI SISTEMA
-   ========================= */
-
-#messaggio {
-  margin: 0 0 14px;
-  color: var(--grigio-testo);
-  font-weight: 600;
-}
-
-#messaggio:empty {
-  display: none;
-}
-
-#messaggio.errore {
-  padding: 12px 14px;
-  color: var(--rosso-scuro);
-  background: var(--rosso-chiaro);
-  border-left: 4px solid var(--rosso);
-  border-radius: 6px;
-}
-
-/* =========================
-   NAVIGAZIONE TRA LE PAGINE
-   ========================= */
-
-nav {
-  display: flex;
-  align-items: stretch;
-  gap: 12px;
-  margin-top: 18px;
-}
-
-nav button {
-  min-height: 52px;
-  border: 0;
-  border-radius: 10px;
-  font: inherit;
-  font-weight: 750;
-  cursor: pointer;
-  transition:
-    background-color 0.18s ease,
-    transform 0.18s ease,
-    box-shadow 0.18s ease;
-}
-
-/* Pulsante indietro */
-
-#indietro {
-  width: 58px;
-  color: #ffffff;
-  background: var(--nero-soft);
-  font-size: 1.45rem;
-}
-
-#indietro:hover {
-  background: var(--nero);
-}
-
-/* Pulsante avanti */
-
-#avanti {
-  width: 58px;
-  margin-left: auto;
-  color: #ffffff;
-  background: var(--rosso);
-  font-size: 1.45rem;
-}
-
-#avanti:hover {
-  background: var(--rosso-scuro);
-}
-
-/* Pulsante di conferma */
-
-#invia {
-  flex: 1;
-  color: #ffffff;
-  background: var(--rosso);
-}
-
-#invia:hover {
-  background: var(--rosso-scuro);
-}
-
-/* Interazioni dei pulsanti */
-
-nav button:hover:not(:disabled) {
-  transform: translateY(-1px);
-}
-
-nav button:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-button:focus-visible {
-  outline: 3px solid var(--rosso);
-  outline-offset: 3px;
-}
-
-button:disabled {
-  opacity: 0.6;
-  cursor: wait;
-  transform: none;
-}
-
-/* =========================
-   CONFERMA PRENOTAZIONE
-   ========================= */
-
-#successo {
-  text-align: center;
-  border-top-color: var(--rosso);
-}
-
-#successo img {
-  display: block;
-  width: 110px;
-  height: 110px;
-  margin: 0 auto 18px;
-  object-fit: contain;
-}
-
-#successo h2 {
-  color: var(--rosso);
-  font-size: 1.5rem;
-}
-
-#successo p,
-dialog p {
-  margin: 14px 0 24px;
-  color: var(--grigio-testo);
-}
-
-/* Pulsante principale nella schermata di conferma */
-
-.primario {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 52px;
-  padding: 12px 18px;
-  color: #ffffff;
-  background: var(--rosso);
-  border: 0;
-  border-radius: 10px;
-  font: inherit;
-  font-weight: 750;
-  cursor: pointer;
-  transition:
-    background-color 0.18s ease,
-    transform 0.18s ease;
-}
-
-.primario:hover {
-  background: var(--rosso-scuro);
-  transform: translateY(-1px);
-}
-
-/* =========================
-   FINESTRA DI TURNO PIENO
-   ========================= */
-
-dialog {
-  width: min(calc(100% - 32px), 380px);
-  padding: 28px 24px;
-  color: var(--testo);
-  text-align: center;
-  background: var(--sfondo-card);
-  border: 1px solid var(--bordo);
-  border-top: 5px solid var(--rosso);
-  border-radius: var(--raggio);
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.2);
-}
-
-dialog h2 {
-  color: var(--nero);
-}
-
-dialog::backdrop {
-  background: rgba(37, 35, 38, 0.62);
-  backdrop-filter: blur(3px);
-}
-
-/* =========================
-   CAMPO ANTI-SPAM NASCOSTO
-   ========================= */
-
-.trappola {
-  position: absolute;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-}
-
-/* =========================
-   RESPONSIVE — TABLET E MOBILE
-   ========================= */
+  --porcelain: #FFFFFA;
+  --rose: #8C2F39;
+  --marine: #296EB4;
+  --coffee: #0E0004;
+  --red: #FF1B1C;
+  --bg: #F4F2F1;
+  --card: #FFFFFA;
+  --text: #0E0004;
+  --border: #D9D3D4;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; color: var(--text); background: var(--bg); font: 16px/1.55 system-ui, sans-serif; }
+
+header { display: flex; align-items: center; gap: 14px; padding: 14px 22px; background: var(--coffee); border-bottom: 5px solid var(--red); }
+header img { width: 48px; height: 48px; object-fit: contain; }
+header h1 { margin: 0; color: var(--red); font-size: 1.9rem; font-weight: 900; letter-spacing: -.035em; }
+
+main { width: min(100% - 28px, 620px); margin: auto; padding: 28px 0 45px; }
+#intro { color: #62575A; margin: 0 0 24px; }
+
+.passo, .scheda { margin-bottom: 20px; padding: 26px 22px; background: var(--card); border: 1px solid var(--border); border-top: 5px solid var(--red); border-radius: 12px; box-shadow: 0 5px 18px #0E000412; }
+legend, h2 { color: var(--coffee); font-size: 1.25rem; font-weight: 850; }
+h2:not(:first-child) { margin-top: 28px; }
+
+.campi { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 14px; margin-top: 18px; }
+.intero { grid-column: 1 / -1; }
+label { display: flex; flex-direction: column; gap: 7px; font-size: .93rem; font-weight: 650; }
+
+input:not([type="radio"]):not([type="hidden"]), select, textarea {
+  width: 100%; min-height: 49px; padding: 12px;
+  color: var(--coffee); background: #FFFFFF;
+  border: 1.5px solid #D9D3D4; border-radius: 7px; font: inherit;
+}
+textarea { resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: 3px solid #296EB425; border-color: var(--marine); }
+
+.scelta { display: flex; flex-direction: row; align-items: center; gap: 12px; margin-top: 13px; padding: 16px; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; background: #FFFFFF; }
+.scelta:has(input:checked) { border-color: var(--red); background: #FFF0F0; box-shadow: 0 0 0 1px var(--red); }
+.scelta input { accent-color: var(--red); }
+
+#legenda { display: flex; flex-wrap: wrap; gap: 10px 16px; padding: 0; list-style: none; font-size: .84rem; }
+#legenda li { display: flex; align-items: center; gap: 6px; }
+#legenda i { width: 11px; height: 11px; border-radius: 50%; }
+
+#giorni { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.giorno { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 82px; color: white; border: 3px solid transparent; border-radius: 8px; cursor: pointer; }
+.giorno span { font-size: .72rem; text-transform: uppercase; }
+.giorno strong { font-size: 1.4rem; }
+.verde { background: var(--marine); }
+.giallo { background: var(--rose); }
+.rosso { background: var(--red); }
+.pieno { background: var(--coffee); }
+.giorno.pieno { opacity: .4; cursor: not-allowed; }
+.giorno.scelto { border-color: var(--coffee); box-shadow: 0 0 0 2px white inset; }
+
+#riepilogo { margin-top: 18px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+#riepilogo h3 { margin: 0; padding: 11px 14px; color: white; background: var(--coffee); border-left: 4px solid var(--red); font-size: .88rem; }
+#riepilogo dl { display: grid; grid-template-columns: 1fr 1.2fr; gap: 10px; margin: 0; padding: 11px 14px; border-top: 1px solid #E9E4E4; }
+#riepilogo dt { color: #62575A; }
+#riepilogo dd { margin: 0; font-weight: 700; overflow-wrap: anywhere; }
+
+#messaggio { font-weight: 650; }
+#messaggio:empty { display: none; }
+#messaggio.errore, .nota.errore { color: var(--rose); }
+
+nav { display: flex; gap: 10px; }
+nav button, .primario { min-height: 52px; padding: 12px 18px; color: white; border: 0; border-radius: 8px; font: inherit; font-weight: 800; cursor: pointer; }
+#indietro { background: var(--coffee); }
+#avanti { width: 60px; margin-left: auto; background: var(--marine); font-size: 1.5rem; }
+#invia, .primario { background: var(--red); }
+#invia { flex: 1; }
+#successo { text-align: center; border-top-color: var(--red); }
+#successo h2 { color: var(--red); }
+#successo img { width: 100px; height: 100px; object-fit: contain; }
+#successo p, dialog p { color: #62575A; }
+dialog { width: min(100% - 32px, 380px); padding: 25px; border: 0; border-top: 5px solid var(--red); border-radius: 12px; text-align: center; }
+dialog::backdrop { background: #0E0004CC; }
+.trappola { position: absolute; left: -9999px; }
 
 @media (max-width: 560px) {
-  header {
-    gap: 12px;
-    padding: 13px 16px;
-  }
-
-  header img {
-    width: 42px;
-    height: 42px;
-  }
-
-  main {
-    width: min(100% - 24px, 650px);
-    padding-top: 22px;
-  }
-
-  .passo,
-  .scheda {
-    padding: 23px 17px;
-    margin-bottom: 18px;
-  }
-
-  .campi {
-    grid-template-columns: 1fr;
-    gap: 17px;
-  }
-
-  .intero {
-    grid-column: auto;
-  }
-
-  #giorni {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 9px;
-  }
-
-  .giorno {
-    min-height: 78px;
-    padding: 9px 4px;
-  }
-
-  .giorno strong {
-    font-size: 1.25rem;
-  }
-
-  .giorno span {
-    font-size: 0.68rem;
-  }
-
-  #riepilogo dl {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    gap: 9px;
-    padding: 11px 12px;
-  }
-
-  #legenda {
-    gap: 9px 13px;
-    font-size: 0.8rem;
-  }
+  main { width: calc(100% - 24px); }
+  .passo, .scheda { padding: 22px 16px; }
+  .campi { grid-template-columns: 1fr; }
+  .intero { grid-column: auto; }
+  #giorni { gap: 7px; }
+  .giorno { min-height: 74px; }
+  .giorno strong { font-size: 1.2rem; }
 }
-
-/* =========================
-   ACCESSIBILITÀ
-   ========================= */
-
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
-```
