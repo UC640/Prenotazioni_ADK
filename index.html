@@ -18,7 +18,8 @@
 <main>
 
   <p id="intro">
-    Compila il modulo e scegli il giorno: riceverai la conferma via email.
+    Compila, invia, inizia!
+    Riceverai conferma via email.
   </p>
 
   <form id="form" novalidate>
@@ -26,7 +27,7 @@
     <!-- PAGINA 0: SCELTA DEL PERCORSO -->
 
     <section class="passo" data-passo="0">
-      <h2>Chi compila la prenotazione?</h2>
+      <h2>Chi compila?</h2>
 
       <label class="scelta">
         <input type="radio" name="tipo" value="genitore" required>
@@ -156,7 +157,7 @@
 
         <div data-blocco="adulto" hidden>
 
-          <h2 class="titolo-sezione">I tuoi dati personali</h2>
+          <h2 class="titolo-sezione">I tuoi dati</h2>
 
           <fieldset class="gruppo-campi">
             <div class="campi">
@@ -241,7 +242,7 @@
 
         <div data-blocco="genitore" hidden>
 
-          <h2>Informazioni sul bambino/a</h2>
+          <h2>Aiutaci a conoscerlo/a</h2>
 
           <fieldset class="gruppo-campi">
             <div class="campi">
@@ -279,7 +280,7 @@
                 <textarea
                   name="figlioNote"
                   rows="4"
-                  placeholder="Vuoi comunicarci qualcosa sul bambino/a?"
+                  placeholder="è molto vivace..."
                 ></textarea>
               </label>
 
@@ -360,8 +361,7 @@
         <h2>Riepilogo della prenotazione</h2>
 
         <p class="testo-supporto">
-          Controlla i dati inseriti prima di confermare.
-          Se vuoi correggerli, puoi tornare indietro.
+          Controlla i dati inseriti
         </p>
 
         <div id="riepilogo"></div>
@@ -426,8 +426,8 @@
     <h2>Prenotazione confermata!</h2>
 
     <p>
-      Controlla la tua casella di posta: ti abbiamo inviato la conferma.
-      Se non la trovi, controlla anche la cartella spam.
+      Controlla la tua casella di posta, riceverai una mail di conferma.
+      Se non la trovi, controlla la cartella <i>spam</i>.
     </p>
 
     <button
@@ -450,7 +450,7 @@
   <h2>Turno pieno</h2>
 
   <p>
-    Tutti i posti di questo giorno sono già stati prenotati.
+    Il turno è pieno!
     Scegli un altro giorno.
   </p>
 
