@@ -1,118 +1,19 @@
 <!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0a0a0a">
-  <title>Prenota una prova · ADKarate</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
-</head>
-<body>
-
-<header>
-  <img src="ADKlogo.jpeg" alt="Logo ADKarate">
-  <h1>ADKarate</h1>
-</header>
-
-<main>
-  <p id="intro">Compila il modulo e scegli il giorno: riceverai la conferma via email.</p>
-
-  <form id="form" novalidate>
-
-    <fieldset class="passo" data-passo="0">
-      <legend>Chi compila?</legend>
-      <label class="scelta"><input type="radio" name="tipo" value="genitore"> <span>Sono un genitore<small>Prenoto per mio figlio/a</small></span></label>
-      <label class="scelta"><input type="radio" name="tipo" value="adulto"> <span>Sono maggiorenne<small>Prenoto per me</small></span></label>
-    </fieldset>
-
-    <div id="dopo" hidden>
-
-      <section class="passo" data-passo="1">
-        <div data-blocco="genitore" hidden>
-          <h2>Genitore</h2>
-          <div class="campi">
-            <label>Nome <input name="genitoreNome" placeholder="Es. Marco" required autocomplete="given-name"></label>
-            <label>Cognome <input name="genitoreCognome" placeholder="Es. Rossi" required autocomplete="family-name"></label>
-            <label class="intero">Telefono <input name="genitoreTelefono" type="tel" placeholder="Es. 3331234567" required autocomplete="tel"></label>
-          </div>
-          <h2>Figlio/a</h2>
-          <div class="campi">
-            <label>Nome <input name="figlioNome" placeholder="Es. Luca" required></label>
-            <label>Data di nascita <input name="figlioNascita" type="date" required></label>
-            <label class="intero">Ha già fatto karate?
-              <select name="figlioEsperienza" required><option value="">Scegli…</option><option>Sì</option><option>No</option></select>
-            </label>
-            <label class="intero">Chi lo accompagna? <input name="accompagnatore" placeholder="Es. Mamma"></label>
-            <label class="intero">Note <textarea name="figlioNote" rows="3" placeholder="Es. Timido, ama il calcio"></textarea></label>
-          </div>
-        </div>
-
-        <div data-blocco="adulto" hidden>
-          <h2>I tuoi dati</h2>
-          <div class="campi">
-            <label>Nome <input name="adultoNome" placeholder="Es. Marco" required autocomplete="given-name"></label>
-            <label>Cognome <input name="adultoCognome" placeholder="Es. Rossi" required autocomplete="family-name"></label>
-            <label class="intero">Cellulare <input name="adultoTelefono" type="tel" placeholder="Es. 3331234567" required autocomplete="tel"></label>
-            <label class="intero">Data di nascita <input name="adultoNascita" type="date" required></label>
-            <label class="intero">Hai già fatto karate?
-              <select name="adultoEsperienza" required><option value="">Scegli…</option><option>Sì</option><option>No</option></select>
-            </label>
-          </div>
-        </div>
-      </section>
-
-      <section class="passo" data-passo="2">
-        <h2>Contatti</h2>
-        <div class="campi">
-          <label class="intero">Email <input name="email" type="email" placeholder="Es. marco@email.it" required autocomplete="email"></label>
-          <label class="intero">Comune di residenza <input name="comune" placeholder="Es. Milano" required autocomplete="address-level2"></label>
-          <label id="campoGrado" class="intero" hidden>Ricordi il grado? <input name="grado" placeholder="Es. Cintura gialla"></label>
-        </div>
-      </section>
-
-      <section class="passo" data-passo="3">
-        <h2>Scegli il giorno</h2>
-        <ul id="legenda">
-          <li><i class="verde"></i>3 posti</li>
-          <li><i class="giallo"></i>2 posti</li>
-          <li><i class="rosso"></i>Ultimo posto</li>
-          <li><i class="pieno"></i>Pieno</li>
-        </ul>
-        <div id="giorni"></div>
-        <input type="hidden" name="giorno" id="giorno">
-      </section>
-
-      <section class="passo" data-passo="4">
-        <h2>Riepilogo</h2>
-        <div id="riepilogo"></div>
-      </section>
-
-      <input class="trappola" name="trappola" tabindex="-1" autocomplete="off" aria-hidden="true">
-    </div>
-
-    <p id="messaggio" role="status"></p>
-
-    <nav>
-      <button type="button" id="indietro" aria-label="Indietro" hidden>←</button>
-      <button type="button" id="avanti" aria-label="Avanti">→</button>
-      <button type="submit" id="invia" hidden>Conferma prenotazione</button>
-    </nav>
-  </form>
-
-  <section id="successo" class="scheda" hidden>
-    <img src="ADKlogo.jpeg" alt="Logo ADKarate">
-    <h2>Grazie per aver prenotato!</h2>
-    <p>Controlla la tua casella di posta: ti abbiamo inviato la conferma (guarda anche nello spam).</p>
-    <button type="button" id="nuova" class="primario">Nuova prenotazione</button>
-  </section>
-</main>
-
-<dialog id="dialogo">
-  <h2>Turno pieno</h2>
-  <p>Tutti i posti di questo giorno sono già stati prenotati. Scegli un altro giorno.</p>
-  <button type="button" id="chiudi" class="primario">Ho capito</button>
-</dialog>
-
-</body>
-</html>
+<html lang="it"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0a0a0a"><title>Prenota una prova · ADKarate</title><link rel="stylesheet" href="style.css"><script src="script.js" defer></script></head><body>
+<header><img src="ADKlogo.jpeg" alt="Logo ADKarate"><h1>ADKarate</h1></header>
+<main><p id="intro">Compila il modulo e scegli il giorno: riceverai la conferma via email.</p>
+<form id="form" novalidate>
+<fieldset class="passo" data-passo="0"><legend>Chi compila?</legend><label class="scelta"><input type="radio" name="tipo" value="genitore" required><span>Sono un genitore<small>Prenoto per mio figlio/a</small></span></label><label class="scelta"><input type="radio" name="tipo" value="adulto" required><span>Sono maggiorenne<small>Prenoto per me</small></span></label></fieldset>
+<div id="dopo" hidden>
+<section class="passo" data-passo="1">
+<div data-blocco="genitore" hidden><h2>Dati del genitore</h2><div class="campi">
+<label>Nome<input name="genitoreNome" placeholder="Es. Marco" required autocomplete="given-name"></label><label>Cognome<input name="genitoreCognome" placeholder="Es. Rossi" required autocomplete="family-name"></label><label class="intero">Telefono<input name="genitoreTelefono" type="tel" placeholder="Es. 3331234567" required autocomplete="tel"></label></div>
+<h2>Dati del figlio/a</h2><div class="campi"><label>Nome<input name="figlioNome" placeholder="Es. Luca" required></label><label>Data di nascita<input name="figlioNascita" type="date" required></label><label class="intero">Ha già praticato karate?<select name="figlioEsperienza" required><option value="">Scegli…</option><option value="Sì">Sì</option><option value="No">No</option></select></label><label id="campoGrado" class="intero" hidden>Ricordi il grado?<input name="grado" placeholder="Es. Cintura gialla" disabled></label><label class="intero">Chi lo accompagna?<input name="accompagnatore" placeholder="Es. Mamma"></label><label class="intero">Note<textarea name="figlioNote" rows="3" placeholder="Es. Timido, ama il calcio"></textarea></label></div></div>
+<div data-blocco="adulto" hidden><h2>I tuoi dati</h2><div class="campi"><label>Nome<input name="adultoNome" placeholder="Es. Marco" required autocomplete="given-name"></label><label>Cognome<input name="adultoCognome" placeholder="Es. Rossi" required autocomplete="family-name"></label><label class="intero">Data di nascita<input name="adultoNascita" type="date" required></label><label class="intero">Telefono<input name="adultoTelefono" type="tel" placeholder="Es. 3331234567" required autocomplete="tel"></label><label class="intero">Hai già praticato karate?<select name="adultoEsperienza" required><option value="">Scegli…</option><option value="Sì">Sì</option><option value="No">No</option></select></label></div></div>
+<h2>Contatti</h2><div class="campi"><label class="intero">Comune di residenza<input name="comune" placeholder="Es. Milano" required autocomplete="address-level2"></label><label class="intero">Email<input name="email" type="email" placeholder="Es. marco@email.it" required autocomplete="email"></label></div>
+</section>
+<section class="passo" data-passo="2"><h2>Scegli il giorno</h2><p class="testo-supporto">Scegli una delle date disponibili per la prova.</p><ul id="legenda"><li><i class="verde"></i>3 o più posti</li><li><i class="giallo"></i>2 posti</li><li><i class="rosso"></i>Ultimo posto</li><li><i class="pieno"></i>Pieno</li></ul><div id="giorni"></div><input type="hidden" name="giorno" id="giorno"></section>
+<section class="passo" data-passo="3"><h2>Riepilogo della prenotazione</h2><p class="testo-supporto">Controlla i dati inseriti. Puoi tornare indietro per correggerli.</p><div id="riepilogo"></div></section><input class="trappola" name="trappola" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+<p id="messaggio" role="status" aria-live="polite"></p><nav aria-label="Navigazione del modulo"><button type="button" id="indietro" aria-label="Indietro" hidden>←</button><button type="button" id="avanti" aria-label="Avanti">→</button><button type="submit" id="invia" hidden>Invia prenotazione</button></nav></form>
+<section id="successo" class="scheda" hidden><img src="ADKlogo.jpeg" alt="Logo ADKarate"><h2>Grazie per aver prenotato!</h2><p>Controlla la tua casella di posta: ti abbiamo inviato la conferma (guarda anche nello spam).</p><button type="button" id="nuova" class="primario">Nuova prenotazione</button></section></main>
+<dialog id="dialogo"><h2>Turno pieno</h2><p>Tutti i posti di questo giorno sono già stati prenotati. Scegli un altro giorno.</p><button type="button" id="chiudi" class="primario">Ho capito</button></dialog></body></html>
