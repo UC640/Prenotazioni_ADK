@@ -1,1202 +1,132 @@
-/* ==================================================
-   ADKARATE — PALETTE UFFICIALE
-   ================================================== */
-
+/* VARIANTE 1 — ELEGANTE E BILANCIATA */
 :root {
   --porcelain: #FFFFFA;
-  --burnt-rose: #8C2F39;
-  --bright-marine: #296EB4;
-  --coffee-bean: #0E0004;
+  --rose: #8C2F39;
+  --marine: #296EB4;
+  --coffee: #0E0004;
   --red: #FF1B1C;
-
-  /* Colori funzionali */
-  --sfondo: var(--porcelain);
-  --superficie: #FFFFFF;
-  --testo: var(--coffee-bean);
-  --testo-secondario: #62575A;
-  --bordo: #E4DADC;
-
-  --primario: var(--bright-marine);
-  --primario-hover: #205A94;
-
-  --accento: var(--burnt-rose);
-  --accento-hover: #72242D;
-
-  --errore: var(--red);
-
-  --raggio: 14px;
-  --raggio-piccolo: 9px;
-
-  --ombra:
-    0 5px 20px rgba(14, 0, 4, 0.07);
-
-  --ombra-focus:
-    0 0 0 4px rgba(41, 110, 180, 0.16);
+  --bg: #FFFFFA;
+  --card: #FFFFFF;
+  --text: #0E0004;
+  --border: #E5DADD;
 }
 
-
-/* ==================================================
-   RESET E IMPOSTAZIONI GENERALI
-   ================================================== */
-
-* {
-  box-sizing: border-box;
-}
-
-[hidden] {
-  display: none !important;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
 
 body {
   margin: 0;
-  color: var(--testo);
-  background: var(--sfondo);
-
-  font-family:
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
-
-  font-size: 16px;
-  line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
+  color: var(--text);
+  background: var(--bg);
+  font: 16px/1.55 system-ui, sans-serif;
 }
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-button {
-  -webkit-tap-highlight-color: transparent;
-}
-
-::selection {
-  color: var(--porcelain);
-  background: var(--burnt-rose);
-}
-
-
-/* ==================================================
-   INTESTAZIONE
-   ================================================== */
 
 header {
   display: flex;
   align-items: center;
   gap: 14px;
-
-  min-height: 78px;
-  padding: 14px 24px;
-
-  color: var(--porcelain);
-  background: var(--coffee-bean);
-
-  border-bottom: 4px solid var(--burnt-rose);
+  padding: 14px 22px;
+  background: var(--coffee);
+  border-bottom: 5px solid var(--rose);
 }
 
-header img {
-  display: block;
-
-  width: 48px;
-  height: 48px;
-
-  object-fit: contain;
-}
+header img { width: 48px; height: 48px; object-fit: contain; }
 
 header h1 {
   margin: 0;
-
-  color: var(--porcelain);
-
-  font-size: 1.8rem;
-  font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 1.2;
+  color: var(--red);
+  font-size: 1.9rem;
+  font-weight: 850;
 }
 
+main { width: min(100% - 28px, 620px); margin: auto; padding: 28px 0 45px; }
+#intro { color: #62575A; margin: 0 0 24px; }
 
-/* ==================================================
-   CONTENITORE PRINCIPALE
-   ================================================== */
-
-main {
-  width: min(100% - 32px, 620px);
-
-  margin: 0 auto;
-  padding: 30px 0 48px;
+.passo, .scheda {
+  margin-bottom: 20px;
+  padding: 26px 22px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 5px solid var(--rose);
+  border-radius: 14px;
+  box-shadow: 0 5px 20px #0E000410;
 }
 
+legend, h2 { color: var(--rose); font-size: 1.25rem; font-weight: 800; }
+h2:not(:first-child) { margin-top: 28px; }
 
-/* ==================================================
-   TESTO INTRODUTTIVO
-   ================================================== */
+.campi { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 14px; margin-top: 18px; }
+.intero { grid-column: 1 / -1; }
 
-#intro {
-  margin: 0 0 24px;
-
-  color: var(--testo-secondario);
-
-  font-size: 1rem;
-  line-height: 1.65;
+label { display: flex; flex-direction: column; gap: 7px; font-size: .93rem; font-weight: 650; }
+input:not([type="radio"]):not([type="hidden"]), select, textarea {
+  width: 100%; min-height: 49px; padding: 12px;
+  color: var(--coffee); background: var(--porcelain);
+  border: 1.5px solid #D8CDD0; border-radius: 8px; font: inherit;
 }
-
-
-/* ==================================================
-   PAGINE DEL MODULO E SCHEDE
-   ================================================== */
-
-.passo,
-.scheda {
-  margin: 0 0 20px;
-  padding: 28px 24px;
-
-  background: var(--superficie);
-
-  border: 1px solid var(--bordo);
-  border-top: 5px solid var(--burnt-rose);
-
-  border-radius: var(--raggio);
-
-  box-shadow: var(--ombra);
-
-  animation: apparizione 0.25s ease-out;
+textarea { resize: vertical; }
+input:focus, select:focus, textarea:focus {
+  outline: 3px solid #296EB425; border-color: var(--marine);
 }
-
-.passo {
-  min-width: 0;
-}
-
-@keyframes apparizione {
-  from {
-    opacity: 0;
-    transform: translateY(7px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
-/* ==================================================
-   TITOLI E LEGGENDE DEI FORM FIELD
-   ================================================== */
-
-legend,
-h2 {
-  margin: 0 0 8px;
-  padding: 0;
-
-  color: var(--burnt-rose);
-
-  font-size: 1.3rem;
-  font-weight: 800;
-  line-height: 1.35;
-}
-
-legend {
-  width: 100%;
-}
-
-h2:not(:first-child) {
-  margin-top: 30px;
-}
-
-/*
- * I contenitori dedicati ai dati del genitore
- * e del bambino possono avere il proprio fieldset.
- */
-
-fieldset {
-  min-width: 0;
-}
-
-fieldset.passo {
-  border-left: 1px solid var(--bordo);
-  border-right: 1px solid var(--bordo);
-  border-bottom: 1px solid var(--bordo);
-}
-
-
-/* ==================================================
-   GRIGLIA DEI CAMPI
-   ================================================== */
-
-.campi {
-  display: grid;
-
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-
-  gap: 20px 16px;
-
-  margin-top: 20px;
-}
-
-.intero {
-  grid-column: 1 / -1;
-}
-
-
-/* ==================================================
-   ETICHETTE DEI CAMPI
-   ================================================== */
-
-label {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-
-  min-width: 0;
-
-  color: var(--coffee-bean);
-
-  font-size: 0.93rem;
-  font-weight: 650;
-  line-height: 1.4;
-}
-
-label small {
-  display: block;
-
-  margin-top: 3px;
-
-  color: var(--testo-secondario);
-
-  font-size: 0.84rem;
-  font-weight: 400;
-  line-height: 1.45;
-}
-
-
-/* ==================================================
-   INPUT, SELECT E TEXTAREA
-   ================================================== */
-
-input:not([type="radio"]):not([type="checkbox"]):not([type="hidden"]),
-select,
-textarea {
-  display: block;
-
-  width: 100%;
-  min-width: 0;
-  min-height: 50px;
-
-  padding: 12px 14px;
-
-  color: var(--coffee-bean);
-  background: var(--porcelain);
-
-  border: 1.5px solid #D8CDD0;
-  border-radius: var(--raggio-piccolo);
-
-  outline: none;
-
-  font-size: 1rem;
-  font-weight: 400;
-
-  transition:
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    background-color 0.18s ease;
-}
-
-textarea {
-  min-height: 110px;
-
-  resize: vertical;
-  line-height: 1.55;
-}
-
-select {
-  cursor: pointer;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: #8B8184;
-  opacity: 1;
-}
-
-/* Stato attivo */
-
-input:not([type="radio"]):not([type="checkbox"]):focus,
-select:focus,
-textarea:focus {
-  background: #FFFFFF;
-
-  border-color: var(--bright-marine);
-
-  box-shadow: var(--ombra-focus);
-}
-
-/* Campi disabilitati */
-
-input:disabled,
-select:disabled,
-textarea:disabled {
-  color: #82777A;
-  background: #F1EDEF;
-
-  cursor: not-allowed;
-}
-
-/* Data di nascita */
-
-input[type="date"] {
-  min-height: 50px;
-  cursor: pointer;
-}
-
-
-/* ==================================================
-   CAMPI CONDIZIONALI
-   ================================================== */
-
-/*
- * Il JavaScript controlla la proprietà hidden.
- * Qui rendiamo più fluida la presentazione dei campi
- * che appaiono quando si seleziona "Sì".
- */
-
-[id^="campoGrado"] {
-  margin-top: 2px;
-}
-
-[id^="campoGrado"] input {
-  border-color: var(--bright-marine);
-  background: #F5F9FE;
-}
-
-
-/* ==================================================
-   SCELTA GENITORE / ADULTO
-   ================================================== */
 
 .scelta {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  gap: 13px;
-
-  margin-top: 14px;
-  padding: 17px;
-
-  color: var(--coffee-bean);
-  background: var(--porcelain);
-
-  border: 1.5px solid var(--bordo);
-  border-radius: 12px;
-
-  cursor: pointer;
-
-  transition:
-    border-color 0.18s ease,
-    background-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.18s ease;
+  display: flex; flex-direction: row; align-items: center; gap: 12px;
+  margin-top: 13px; padding: 16px; border: 1.5px solid var(--border);
+  border-radius: 10px; cursor: pointer; background: var(--porcelain);
 }
+.scelta:has(input:checked) { border-color: var(--marine); background: #EAF2FA; }
+.scelta input { accent-color: var(--marine); }
 
-.scelta:hover {
-  border-color: var(--bright-marine);
-  background: #F5F9FE;
+#legenda { display: flex; flex-wrap: wrap; gap: 10px 16px; padding: 0; list-style: none; font-size: .84rem; }
+#legenda li { display: flex; align-items: center; gap: 6px; }
+#legenda i { width: 11px; height: 11px; border-radius: 50%; }
+
+#giorni { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.giorno { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 82px; color: white; border: 3px solid transparent; border-radius: 10px; cursor: pointer; }
+.giorno span { font-size: .72rem; text-transform: uppercase; }
+.giorno strong { font-size: 1.4rem; }
+.verde { background: var(--marine); }
+.giallo { background: var(--rose); }
+.rosso { background: var(--red); }
+.pieno { background: var(--coffee); }
+.giorno.pieno { opacity: .4; cursor: not-allowed; }
+.giorno.scelto { border-color: var(--coffee); box-shadow: 0 0 0 2px white inset; }
+
+#riepilogo { margin-top: 18px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+#riepilogo h3 { margin: 0; padding: 11px 14px; color: white; background: var(--rose); font-size: .88rem; }
+#riepilogo dl { display: grid; grid-template-columns: 1fr 1.2fr; gap: 10px; margin: 0; padding: 11px 14px; border-top: 1px solid #EEE6E8; }
+#riepilogo dt { color: #62575A; }
+#riepilogo dd { margin: 0; font-weight: 650; overflow-wrap: anywhere; }
+
+#messaggio { font-weight: 600; }
+#messaggio:empty { display: none; }
+#messaggio.errore, .nota.errore { color: var(--rose); }
+
+nav { display: flex; gap: 10px; }
+nav button, .primario {
+  min-height: 52px; padding: 12px 18px; color: white;
+  border: 0; border-radius: 9px; font: inherit; font-weight: 750; cursor: pointer;
 }
-
-.scelta:has(input:checked) {
-  border-color: var(--bright-marine);
-  background: #EDF5FD;
-
-  box-shadow:
-    0 0 0 1px var(--bright-marine);
-}
-
-.scelta input[type="radio"] {
-  flex: 0 0 auto;
-
-  width: 21px;
-  height: 21px;
-
-  margin: 0;
-
-  accent-color: var(--bright-marine);
-
-  cursor: pointer;
-}
-
-.scelta span {
-  display: block;
-  min-width: 0;
-}
-
-.scelta span small {
-  display: block;
-}
-
-
-/* ==================================================
-   LEGENDA DISPONIBILITÀ
-   ================================================== */
-
-#legenda {
-  display: flex;
-  flex-wrap: wrap;
-
-  gap: 10px 16px;
-
-  margin: 18px 0 20px;
-  padding: 0;
-
-  list-style: none;
-
-  color: var(--testo-secondario);
-  font-size: 0.84rem;
-}
-
-#legenda li {
-  display: flex;
-  align-items: center;
-
-  gap: 7px;
-}
-
-#legenda i {
-  display: inline-block;
-
-  flex: 0 0 auto;
-
-  width: 11px;
-  height: 11px;
-
-  border-radius: 50%;
-}
-
-
-/* ==================================================
-   CALENDARIO
-   ================================================== */
-
-#giorni {
-  display: grid;
-
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-
-  gap: 11px;
-}
-
-.giorno {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  min-width: 0;
-  min-height: 88px;
-
-  padding: 12px 6px;
-
-  color: var(--porcelain);
-
-  border: 2px solid transparent;
-  border-radius: 11px;
-
-  font: inherit;
-
-  cursor: pointer;
-
-  transition:
-    transform 0.16s ease,
-    box-shadow 0.16s ease,
-    border-color 0.16s ease,
-    opacity 0.16s ease;
-}
-
-.giorno:hover:not(.pieno) {
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 5px 12px rgba(14, 0, 4, 0.13);
-}
-
-.giorno span {
-  font-size: 0.72rem;
-  font-weight: 700;
-
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.giorno strong {
-  margin-top: 4px;
-
-  font-size: 1.45rem;
-  font-weight: 800;
-  line-height: 1.2;
-}
-
-
-/*
- * Colori dei turni:
- *
- * Verde:       Bright Marine
- * Giallo:      Burnt Rose
- * Rosso:       Red
- * Pieno:       Coffee Bean
- *
- * La legenda e il testo continuano a indicare
- * chiaramente il numero di posti disponibili.
- */
-
-.verde {
-  color: #FFFFFF;
-  background: var(--bright-marine);
-}
-
-.giallo {
-  color: #FFFFFF;
-  background: var(--burnt-rose);
-}
-
-.rosso {
-  color: #FFFFFF;
-  background: var(--red);
-}
-
-.pieno {
-  color: var(--porcelain);
-  background: var(--coffee-bean);
-}
-
-
-/* Stato del turno pieno */
-
-.giorno.pieno {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-
-/* Giorno selezionato */
-
-.giorno.scelto {
-  border-color: var(--coffee-bean);
-
-  box-shadow:
-    0 0 0 2px var(--porcelain) inset,
-    0 0 0 3px var(--coffee-bean);
-}
-
-.giorno.scelto strong::after {
-  content: " ✓";
-
-  font-size: 0.9rem;
-  font-weight: 800;
-}
-
-
-/* ==================================================
-   MESSAGGI E NOTE
-   ================================================== */
-
-.nota {
-  grid-column: 1 / -1;
-
-  margin: 0;
-
-  color: var(--testo-secondario);
-
-  font-size: 0.93rem;
-  line-height: 1.6;
-}
-
-.nota.errore {
-  color: var(--burnt-rose);
-  font-weight: 700;
-}
-
-#messaggio {
-  margin: 0 0 14px;
-
-  color: var(--testo-secondario);
-
-  font-size: 0.94rem;
-  font-weight: 600;
-}
-
-#messaggio:empty {
-  display: none;
-}
-
-#messaggio.errore {
-  padding: 12px 14px;
-
-  color: var(--burnt-rose);
-  background: #F8ECEE;
-
-  border-left: 4px solid var(--red);
-  border-radius: 5px;
-}
-
-
-/* ==================================================
-   RIEPILOGO DELLA PRENOTAZIONE
-   ================================================== */
-
-#riepilogo {
-  margin-top: 20px;
-
-  overflow: hidden;
-
-  background: var(--superficie);
-
-  border: 1px solid var(--bordo);
-  border-radius: 11px;
-}
-
-
-/* Titoli delle sezioni */
-
-#riepilogo h3 {
-  margin: 0;
-  padding: 12px 15px;
-
-  color: var(--porcelain);
-  background: var(--burnt-rose);
-
-  font-size: 0.88rem;
-  font-weight: 800;
-
-  letter-spacing: 0.035em;
-  text-transform: uppercase;
-}
-
-
-/* Righe del riepilogo */
-
-#riepilogo dl {
-  display: grid;
-
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-
-  gap: 12px;
-
-  margin: 0;
-  padding: 12px 15px;
-
-  border-top: 1px solid #EEE6E8;
-}
-
-#riepilogo dt {
-  color: var(--testo-secondario);
-
-  font-size: 0.9rem;
-}
-
-#riepilogo dd {
-  min-width: 0;
-
-  margin: 0;
-
-  color: var(--coffee-bean);
-
-  font-size: 0.93rem;
-  font-weight: 650;
-
-  overflow-wrap: anywhere;
-}
-
-
-/* ==================================================
-   NAVIGAZIONE TRA LE PAGINE
-   ================================================== */
-
-nav {
-  display: flex;
-  align-items: stretch;
-
-  gap: 12px;
-
-  margin-top: 20px;
-}
-
-nav button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  min-height: 54px;
-
-  padding: 12px 18px;
-
-  color: #FFFFFF;
-
-  border: 0;
-  border-radius: 10px;
-
-  font-size: 1rem;
-  font-weight: 750;
-
-  cursor: pointer;
-
-  transition:
-    background-color 0.18s ease,
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    opacity 0.18s ease;
-}
-
-
-/* Pulsante Avanti */
-
-#avanti {
-  width: 62px;
-  min-width: 62px;
-
-  margin-left: auto;
-
-  background: var(--bright-marine);
-
-  font-size: 1.6rem;
-}
-
-#avanti:hover {
-  background: var(--primario-hover);
-}
-
-
-/* Pulsante Indietro */
-
-#indietro {
-  width: 62px;
-  min-width: 62px;
-
-  background: var(--coffee-bean);
-
-  font-size: 1.6rem;
-}
-
-#indietro:hover {
-  background: var(--burnt-rose);
-}
-
-
-/* Pulsante Conferma */
-
-#invia {
-  flex: 1;
-
-  min-height: 54px;
-
-  color: #FFFFFF;
-  background: var(--red);
-
-  font-size: 1rem;
-}
-
-#invia:hover {
-  background: #DF1118;
-}
-
-
-/* ==================================================
-   PULSANTI GENERICI
-   ================================================== */
-
-button:focus-visible {
-  outline: 3px solid var(--bright-marine);
-  outline-offset: 3px;
-}
-
-button:disabled {
-  opacity: 0.55;
-  cursor: wait;
-}
-
-.primario {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  min-height: 52px;
-
-  padding: 13px 18px;
-
-  color: #FFFFFF;
-  background: var(--red);
-
-  border: 0;
-  border-radius: 10px;
-
-  font-size: 1rem;
-  font-weight: 750;
-
-  cursor: pointer;
-
-  transition:
-    background-color 0.18s ease,
-    transform 0.18s ease;
-}
-
-.primario:hover {
-  background: #DF1118;
-}
-
-.primario:active,
-nav button:active {
-  transform: scale(0.98);
-}
-
-
-/* ==================================================
-   SCHERMATA DI CONFERMA
-   ================================================== */
-
-#successo {
-  padding: 34px 26px;
-
-  text-align: center;
-
-  border-top-color: var(--bright-marine);
-}
-
-#successo img {
-  display: block;
-
-  width: 100px;
-  height: 100px;
-
-  margin: 0 auto 20px;
-
-  object-fit: contain;
-}
-
-#successo h2 {
-  margin: 0 0 12px;
-
-  color: var(--burnt-rose);
-
-  font-size: 1.55rem;
-  line-height: 1.3;
-}
-
-#successo p {
-  margin: 12px 0 26px;
-
-  color: var(--testo-secondario);
-
-  line-height: 1.7;
-}
-
-#successo .primario {
-  margin-top: 6px;
-}
-
-
-/* ==================================================
-   FINESTRA DI AVVISO
-   ================================================== */
-
-dialog {
-  width: min(100% - 32px, 390px);
-
-  padding: 28px 24px;
-
-  color: var(--coffee-bean);
-  background: var(--porcelain);
-
-  border: 1px solid var(--bordo);
-  border-top: 5px solid var(--red);
-
-  border-radius: var(--raggio);
-
-  box-shadow:
-    0 18px 60px rgba(14, 0, 4, 0.22);
-
-  text-align: center;
-}
-
-dialog::backdrop {
-  background: rgba(14, 0, 4, 0.68);
-
-  backdrop-filter: blur(3px);
-}
-
-dialog h2 {
-  margin: 0 0 12px;
-
-  color: var(--burnt-rose);
-}
-
-dialog p {
-  margin: 12px 0 24px;
-
-  color: var(--testo-secondario);
-
-  line-height: 1.65;
-}
-
-
-/* ==================================================
-   CAMPO ANTISPAM INVISIBILE
-   ================================================== */
-
-.trappola {
-  position: absolute !important;
-
-  left: -9999px !important;
-
-  width: 1px !important;
-  height: 1px !important;
-
-  padding: 0 !important;
-
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
-
-/* ==================================================
-   RESPONSIVE — TABLET
-   ================================================== */
-
-@media (max-width: 700px) {
-  main {
-    width: min(100% - 28px, 620px);
-
-    padding-top: 24px;
-  }
-
-  .passo,
-  .scheda {
-    padding: 24px 20px;
-  }
-
-  .campi {
-    gap: 18px 12px;
-  }
-}
-
-
-/* ==================================================
-   RESPONSIVE — SMARTPHONE
-   ================================================== */
+#indietro { background: var(--coffee); }
+#avanti { width: 60px; margin-left: auto; background: var(--marine); font-size: 1.5rem; }
+#invia, .primario { background: var(--red); }
+#invia { flex: 1; }
+#successo { text-align: center; border-top-color: var(--marine); }
+#successo img { width: 100px; height: 100px; object-fit: contain; }
+#successo p, dialog p { color: #62575A; }
+dialog { width: min(100% - 32px, 380px); padding: 25px; border: 0; border-top: 5px solid var(--red); border-radius: 14px; text-align: center; }
+dialog::backdrop { background: #0E0004B3; }
+.trappola { position: absolute; left: -9999px; }
 
 @media (max-width: 560px) {
-  header {
-    min-height: 68px;
-
-    gap: 11px;
-    padding: 11px 16px;
-  }
-
-  header img {
-    width: 42px;
-    height: 42px;
-  }
-
-  header h1 {
-    font-size: 1.55rem;
-  }
-
-  main {
-    width: calc(100% - 24px);
-
-    padding-top: 20px;
-    padding-bottom: 34px;
-  }
-
-  #intro {
-    margin-bottom: 19px;
-
-    font-size: 0.95rem;
-  }
-
-  .passo,
-  .scheda {
-    margin-bottom: 16px;
-    padding: 22px 16px;
-
-    border-radius: 12px;
-  }
-
-  legend,
-  h2 {
-    font-size: 1.18rem;
-  }
-
-  .campi {
-    grid-template-columns: minmax(0, 1fr);
-
-    gap: 18px;
-
-    margin-top: 17px;
-  }
-
-  .intero {
-    grid-column: auto;
-  }
-
-  label {
-    font-size: 0.92rem;
-  }
-
-  input:not([type="radio"]):not([type="checkbox"]):not([type="hidden"]),
-  select,
-  textarea {
-    min-height: 49px;
-
-    padding: 12px;
-  }
-
-  .scelta {
-    gap: 12px;
-
-    padding: 15px 13px;
-  }
-
-  #legenda {
-    gap: 10px 13px;
-
-    font-size: 0.8rem;
-  }
-
-  #giorni {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-
-    gap: 8px;
-  }
-
-  .giorno {
-    min-height: 78px;
-
-    padding: 9px 3px;
-
-    border-radius: 9px;
-  }
-
-  .giorno span {
-    font-size: 0.65rem;
-  }
-
-  .giorno strong {
-    font-size: 1.22rem;
-  }
-
-  #riepilogo h3 {
-    padding: 11px 12px;
-
-    font-size: 0.82rem;
-  }
-
-  #riepilogo dl {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-
-    gap: 10px;
-
-    padding: 11px 12px;
-  }
-
-  #riepilogo dt,
-  #riepilogo dd {
-    font-size: 0.86rem;
-  }
-
-  nav {
-    gap: 10px;
-
-    margin-top: 16px;
-  }
-
-  nav button {
-    min-height: 52px;
-  }
-
-  #avanti,
-  #indietro {
-    width: 56px;
-    min-width: 56px;
-  }
-
-  #invia {
-    padding: 12px;
-
-    font-size: 0.94rem;
-  }
-
-  #successo {
-    padding: 28px 18px;
-  }
-
-  #successo h2 {
-    font-size: 1.35rem;
-  }
-
-  #successo img {
-    width: 86px;
-    height: 86px;
-  }
-
-  dialog {
-    padding: 24px 18px;
-  }
+  main { width: calc(100% - 24px); }
+  .passo, .scheda { padding: 22px 16px; }
+  .campi { grid-template-columns: 1fr; }
+  .intero { grid-column: auto; }
+  #giorni { gap: 7px; }
+  .giorno { min-height: 74px; }
+  .giorno strong { font-size: 1.2rem; }
 }
-
-
-/* ==================================================
-   SCHERMI MOLTO PICCOLI
-   ================================================== */
-
-@media (max-width: 360px) {
-  header h1 {
-    font-size: 1.35rem;
-  }
-
-  #giorni {
-    gap: 6px;
-  }
-
-  .giorno {
-    min-height: 72px;
-  }
-
-  .giorno strong {
-    font-size: 1.1rem;
-  }
-
-  #riepilogo dl {
-    grid-template-columns: 1fr;
-    gap: 3px;
-  }
-
-  #riepilogo dd {
-    font-weight: 700;
-  }
-}
-
-
-/* ==================================================
-   ACCESSIBILITÀ — RIDUZIONE DELLE ANIMAZIONI
-   ================================================== */
-
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-
-    transition-duration: 0.01ms !important;
-  }
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
