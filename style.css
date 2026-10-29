@@ -8,6 +8,11 @@
   --card: #FFFFFF;
   --text: #0E0004;
   --border: #E4D4D6;
+
+  /* Colori delle disponibilità */
+  --verde: #2E8B57;
+  --giallo: #F2B705;
+  --grigio: #8D8D95;
 }
 
 * { box-sizing: border-box; }
@@ -53,11 +58,15 @@ input:focus, select:focus, textarea:focus { outline: 3px solid #296EB425; border
 .giorno { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 82px; color: white; border: 3px solid transparent; border-radius: 10px; cursor: pointer; }
 .giorno span { font-size: .72rem; text-transform: uppercase; }
 .giorno strong { font-size: 1.4rem; }
-.verde { background: var(--marine); }
-.giallo { background: var(--rose); }
+
+/* Disponibilità: 3 o più posti = verde, 2 = giallo, 1 = rosso, pieno = grigio */
+.verde { background: var(--verde); }
+.giallo { background: var(--giallo); }
 .rosso { background: var(--red); }
-.pieno { background: var(--coffee); }
-.giorno.pieno { opacity: .4; cursor: not-allowed; }
+.pieno { background: var(--grigio); }
+.giorno.giallo { color: var(--coffee); }
+.giorno.pieno { opacity: .6; cursor: not-allowed; }
+
 .giorno.scelto { border-color: var(--coffee); box-shadow: 0 0 0 2px white inset; }
 
 #riepilogo { margin-top: 18px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
