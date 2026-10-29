@@ -31,8 +31,7 @@ function val(nome) {
   return "";
 }
 
-// ---------- Percorso genitore / adulto ----------
-
+// Percorso genitore / adulto
 function aggiornaTipo() {
   document.querySelectorAll("[data-blocco]").forEach((b) => {
     const attivo = b.dataset.blocco === tipo();
@@ -57,8 +56,7 @@ function aggiornaGrado() {
   if (!mostra) grado.value = "";
 }
 
-// ---------- Navigazione ----------
-
+// Navigazione 
 function mostraPasso() {
   $("dopo").hidden = !tipo();
   document.querySelectorAll("[data-passo]").forEach((s) => (s.hidden = Number(s.dataset.passo) !== passo));
@@ -105,8 +103,7 @@ function vai(delta) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// ---------- Giorni disponibili ----------
-
+// Giorni disponibili 
 async function caricaGiorni() {
   const numero = ++richiesta;
   giornoInput.value = "";
@@ -132,7 +129,7 @@ async function caricaGiorni() {
   }
 }
 
-// Sul giorno compaiono solo giorno della settimana e data: i posti si leggono dal colore.
+// Sul giorno compaiono solo giorno della settimana e data
 function disegnaGiorni(giorni) {
   if (!giorni.length) return nota("Al momento non ci sono giorni disponibili.");
 
@@ -159,8 +156,7 @@ function disegnaGiorni(giorni) {
   }));
 }
 
-// ---------- Riepilogo ----------
-
+// Riepilogo
 function riepilogo() {
   const gruppi = [];
 
@@ -208,8 +204,7 @@ function riepilogo() {
   });
 }
 
-// ---------- Invio ----------
-
+// Invio
 async function invia(evento) {
   evento.preventDefault();
   if (passo !== 4) return;
@@ -263,8 +258,7 @@ function nuovaPrenotazione() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// ---------- Eventi ----------
-
+// Eventi
 form.querySelectorAll('input[name="tipo"]').forEach((radio) => {
   radio.addEventListener("change", () => {
     richiesta++;
@@ -291,8 +285,7 @@ $("chiudi").addEventListener("click", () => $("dialogo").close());
 $("nuova").addEventListener("click", nuovaPrenotazione);
 form.addEventListener("submit", invia);
 
-// ---------- Avvio ----------
-
+// Avvio
 // Le date di nascita non possono essere nel futuro.
 const oggi = new Date().toLocaleDateString("sv-SE");   // formato aaaa-mm-gg, nel fuso del dispositivo
 form.querySelectorAll('input[type="date"]').forEach((c) => (c.max = oggi));
