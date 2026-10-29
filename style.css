@@ -38,9 +38,13 @@ input:not([type="radio"]):not([type="hidden"]), select, textarea {
 textarea { resize: vertical; }
 input:focus, select:focus, textarea:focus { outline: 3px solid #296EB425; border-color: var(--marine); }
 
+/* Schede "Chi compila?": titolo in grassetto, frase sotto in corsivo, su due righe */
 .scelta { display: flex; flex-direction: row; align-items: center; gap: 12px; margin-top: 13px; padding: 16px; border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; background: #FFFFFA; }
 .scelta:has(input:checked) { border-color: var(--rose); background: #F7ECEE; }
 .scelta input { accent-color: var(--rose); }
+.scelta span { display: flex; flex-direction: column; gap: 2px; }
+.scelta strong { font-weight: 800; }
+.scelta small { font-style: italic; font-weight: 400; color: #62575A; }
 
 #legenda { display: flex; flex-wrap: wrap; gap: 10px 16px; padding: 0; list-style: none; font-size: .84rem; }
 #legenda li { display: flex; align-items: center; gap: 6px; }
@@ -67,12 +71,19 @@ input:focus, select:focus, textarea:focus { outline: 3px solid #296EB425; border
 #messaggio:empty { display: none; }
 #messaggio.errore, .nota.errore { color: var(--rose); }
 
-nav { display: flex; gap: 10px; }
+/* Navigazione */
+nav { display: flex; align-items: center; gap: 10px; }
 nav button, .primario { min-height: 52px; padding: 12px 18px; color: white; border: 0; border-radius: 9px; font: inherit; font-weight: 750; cursor: pointer; }
+
+/* Frecce: due cerchi identici, stessa icona (specchiata) con lo stesso spessore */
+#indietro, #avanti { display: grid; place-items: center; width: 60px; height: 60px; min-height: 0; padding: 0; border-radius: 50%; }
 #indietro { background: var(--coffee); }
-#avanti { width: 60px; margin-left: auto; background: var(--rose); font-size: 1.5rem; }
+#avanti { margin-left: auto; background: var(--rose); }
+nav svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+
 #invia, .primario { background: var(--red); }
 #invia { flex: 1; }
+
 #successo { text-align: center; border-top-color: var(--rose); }
 #successo img { width: 100px; height: 100px; object-fit: contain; }
 #successo p, dialog p { color: #62575A; }
