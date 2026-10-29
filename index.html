@@ -25,14 +25,13 @@
   <form id="form" novalidate>
 
     <!-- PAGINA 0: SCELTA DEL PERCORSO -->
-
     <section class="passo" data-passo="0">
       <h2>Chi compila?</h2>
 
       <label class="scelta">
         <input type="radio" name="tipo" value="genitore" required>
         <span>
-          Sono un genitore
+          <strong>Sono un genitore</strong>
           <small>Prenoto una prova per mio figlio/a.</small>
         </span>
       </label>
@@ -40,7 +39,7 @@
       <label class="scelta">
         <input type="radio" name="tipo" value="adulto" required>
         <span>
-          Sono maggiorenne
+          <strong>Sono maggiorenne</strong>
           <small>Prenoto una prova per me.</small>
         </span>
       </label>
@@ -50,182 +49,86 @@
     <div id="dopo" hidden>
 
       <!-- PAGINA 1: DATI PERSONALI -->
-
       <section class="passo" data-passo="1">
 
         <!-- PERCORSO GENITORE -->
-
         <div data-blocco="genitore" hidden>
 
           <h2 class="titolo-sezione">Dati del genitore</h2>
 
           <fieldset class="gruppo-campi">
             <div class="campi">
-
               <label>
                 Nome
-                <input
-                  name="genitoreNome"
-                  type="text"
-                  placeholder="Es. Marco"
-                  autocomplete="given-name"
-                  required
-                >
+                <input name="genitoreNome" type="text" placeholder="Es. Marco" autocomplete="given-name" required>
               </label>
-
               <label>
                 Cognome
-                <input
-                  name="genitoreCognome"
-                  type="text"
-                  placeholder="Es. Rossi"
-                  autocomplete="family-name"
-                  required
-                >
+                <input name="genitoreCognome" type="text" placeholder="Es. Rossi" autocomplete="family-name" required>
               </label>
-
               <label class="intero">
                 Comune di residenza
-                <input
-                  name="comune"
-                  type="text"
-                  placeholder="Es. Milano"
-                  autocomplete="address-level2"
-                  required
-                >
+                <input name="comune" type="text" placeholder="Es. Milano" autocomplete="address-level2" required>
               </label>
-
               <label class="intero">
                 Telefono
-                <input
-                  name="genitoreTelefono"
-                  type="tel"
-                  placeholder="Es. 3331234567"
-                  autocomplete="tel"
-                  required
-                >
+                <input name="genitoreTelefono" type="tel" placeholder="Es. 3331234567" autocomplete="tel" required>
               </label>
-
               <label class="intero">
                 Email
-                <input
-                  name="email"
-                  type="email"
-                  placeholder="Es. marco@email.it"
-                  autocomplete="email"
-                  required
-                >
+                <input name="email" type="email" placeholder="Es. marco@email.it" autocomplete="email" required>
               </label>
-
             </div>
           </fieldset>
 
-
-          <h2 class="titolo-sezione titolo-secondario">
-            Dati del bambino/a
-          </h2>
+          <h2 class="titolo-sezione titolo-secondario">Dati del bambino/a</h2>
 
           <fieldset class="gruppo-campi">
             <div class="campi">
-
               <label class="intero">
                 Nome del bambino/a
-                <input
-                  name="figlioNome"
-                  type="text"
-                  placeholder="Es. Luca"
-                  required
-                >
+                <input name="figlioNome" type="text" placeholder="Es. Luca" required>
               </label>
-
               <label class="intero">
                 Data di nascita
-                <input
-                  name="figlioNascita"
-                  type="date"
-                  required
-                >
+                <input name="figlioNascita" type="date" required>
               </label>
-
             </div>
           </fieldset>
 
         </div>
 
-
         <!-- PERCORSO ADULTO -->
-
         <div data-blocco="adulto" hidden>
 
           <h2 class="titolo-sezione">I tuoi dati</h2>
 
           <fieldset class="gruppo-campi">
             <div class="campi">
-
               <label>
                 Nome
-                <input
-                  name="adultoNome"
-                  type="text"
-                  placeholder="Es. Marco"
-                  autocomplete="given-name"
-                  required
-                >
+                <input name="adultoNome" type="text" placeholder="Es. Marco" autocomplete="given-name" required>
               </label>
-
               <label>
                 Cognome
-                <input
-                  name="adultoCognome"
-                  type="text"
-                  placeholder="Es. Rossi"
-                  autocomplete="family-name"
-                  required
-                >
+                <input name="adultoCognome" type="text" placeholder="Es. Rossi" autocomplete="family-name" required>
               </label>
-
               <label class="intero">
                 Data di nascita
-                <input
-                  name="adultoNascita"
-                  type="date"
-                  required
-                >
+                <input name="adultoNascita" type="date" required>
               </label>
-
               <label class="intero">
                 Comune di residenza
-                <input
-                  name="comune"
-                  type="text"
-                  placeholder="Es. Milano"
-                  autocomplete="address-level2"
-                  required
-                >
+                <input name="comune" type="text" placeholder="Es. Milano" autocomplete="address-level2" required>
               </label>
-
               <label class="intero">
                 Telefono
-                <input
-                  name="adultoTelefono"
-                  type="tel"
-                  placeholder="Es. 3331234567"
-                  autocomplete="tel"
-                  required
-                >
+                <input name="adultoTelefono" type="tel" placeholder="Es. 3331234567" autocomplete="tel" required>
               </label>
-
               <label class="intero">
                 Email
-                <input
-                  name="email"
-                  type="email"
-                  placeholder="Es. marco@email.it"
-                  autocomplete="email"
-                  required
-                >
+                <input name="email" type="email" placeholder="Es. marco@email.it" autocomplete="email" required>
               </label>
-
             </div>
           </fieldset>
 
@@ -235,18 +138,15 @@
 
 
       <!-- PAGINA 2: ESPERIENZA, ACCOMPAGNATORE E NOTE -->
-
       <section class="passo" data-passo="2">
 
         <!-- DOMANDE PER IL BAMBINO/A -->
-
         <div data-blocco="genitore" hidden>
 
           <h2>Aiutaci a conoscerlo/a</h2>
 
           <fieldset class="gruppo-campi">
             <div class="campi">
-
               <label class="intero">
                 Ha già fatto karate?
                 <select name="figlioEsperienza" required>
@@ -255,50 +155,30 @@
                   <option value="No">No</option>
                 </select>
               </label>
-
               <label id="campoGradoBambino" class="intero" hidden>
                 Ricordi il grado?
-                <input
-                  name="grado"
-                  type="text"
-                  placeholder="Es. Cintura gialla"
-                  disabled
-                >
+                <input name="grado" type="text" placeholder="Es. Cintura gialla" disabled>
               </label>
-
               <label class="intero">
                 Da chi verrà accompagnato?
-                <input
-                  name="accompagnatore"
-                  type="text"
-                  placeholder="Es. Mamma, papà, nonno…"
-                >
+                <input name="accompagnatore" type="text" placeholder="Es. Mamma, papà, nonno…">
               </label>
-
               <label class="intero">
                 Note aggiuntive
-                <textarea
-                  name="figlioNote"
-                  rows="4"
-                  placeholder="è molto vivace..."
-                ></textarea>
+                <textarea name="figlioNote" rows="4" placeholder="è molto vivace..."></textarea>
               </label>
-
             </div>
           </fieldset>
 
         </div>
 
-
         <!-- DOMANDE PER L'ADULTO -->
-
         <div data-blocco="adulto" hidden>
 
           <h2>La tua esperienza</h2>
 
           <fieldset class="gruppo-campi">
             <div class="campi">
-
               <label class="intero">
                 Hai già fatto karate?
                 <select name="adultoEsperienza" required>
@@ -307,17 +187,10 @@
                   <option value="No">No</option>
                 </select>
               </label>
-
               <label id="campoGradoAdulto" class="intero" hidden>
                 Ricordi il grado?
-                <input
-                  name="grado"
-                  type="text"
-                  placeholder="Es. Cintura gialla"
-                  disabled
-                >
+                <input name="grado" type="text" placeholder="Es. Cintura gialla" disabled>
               </label>
-
             </div>
           </fieldset>
 
@@ -327,14 +200,10 @@
 
 
       <!-- PAGINA 3: SCELTA DEL GIORNO -->
-
       <section class="passo" data-passo="3">
 
         <h2>Scegli il giorno della prova</h2>
-
-        <p class="testo-supporto">
-          Seleziona uno dei giorni disponibili.
-        </p>
+        <p class="testo-supporto">Seleziona uno dei giorni disponibili.</p>
 
         <ul id="legenda">
           <li><i class="verde"></i>3 o più posti</li>
@@ -345,24 +214,16 @@
 
         <div id="giorni"></div>
 
-        <input
-          type="hidden"
-          name="giorno"
-          id="giorno"
-        >
+        <input type="hidden" name="giorno" id="giorno">
 
       </section>
 
 
       <!-- PAGINA 4: RIEPILOGO -->
-
       <section class="passo" data-passo="4">
 
         <h2>Riepilogo della prenotazione</h2>
-
-        <p class="testo-supporto">
-          Controlla i dati inseriti
-        </p>
+        <p class="testo-supporto">Controlla i dati inseriti</p>
 
         <div id="riepilogo"></div>
 
@@ -370,55 +231,30 @@
 
 
       <!-- CAMPO ANTISPAM -->
-
-      <input
-        class="trappola"
-        name="trappola"
-        type="text"
-        tabindex="-1"
-        autocomplete="off"
-        aria-hidden="true"
-      >
+      <input class="trappola" name="trappola" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
 
     </div>
 
 
     <!-- MESSAGGI E NAVIGAZIONE -->
-
     <p id="messaggio" role="status" aria-live="polite"></p>
 
     <nav id="navigazione">
-      <button
-        type="button"
-        id="indietro"
-        aria-label="Pagina precedente"
-        hidden
-      >
-        ←
+      <button type="button" id="indietro" aria-label="Pagina precedente" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
       </button>
 
-      <button
-        type="button"
-        id="avanti"
-        aria-label="Pagina successiva"
-      >
-        →
+      <button type="button" id="avanti" aria-label="Pagina successiva">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </button>
 
-      <button
-        type="submit"
-        id="invia"
-        hidden
-      >
-        Conferma prenotazione
-      </button>
+      <button type="submit" id="invia" hidden>Conferma prenotazione</button>
     </nav>
 
   </form>
 
 
   <!-- CONFERMA FINALE -->
-
   <section id="successo" class="scheda" hidden>
 
     <img src="ADKlogo.jpeg" alt="Logo ADKarate">
@@ -430,13 +266,7 @@
       Se non la trovi, controlla la cartella <i>spam</i>.
     </p>
 
-    <button
-      type="button"
-      id="nuova"
-      class="primario"
-    >
-      Nuova prenotazione
-    </button>
+    <button type="button" id="nuova" class="primario">Nuova prenotazione</button>
 
   </section>
 
@@ -444,7 +274,6 @@
 
 
 <!-- AVVISO PER UN TURNO PIENO -->
-
 <dialog id="dialogo">
 
   <h2>Turno pieno</h2>
@@ -454,13 +283,7 @@
     Scegli un altro giorno.
   </p>
 
-  <button
-    type="button"
-    id="chiudi"
-    class="primario"
-  >
-    Ho capito
-  </button>
+  <button type="button" id="chiudi" class="primario">Ho capito</button>
 
 </dialog>
 
